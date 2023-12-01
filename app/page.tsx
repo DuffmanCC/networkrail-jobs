@@ -1,13 +1,13 @@
 import { FilterProvider } from "./context/filter-context";
 import {
-  fetchJobCities,
-  fetchJobContexts,
-  fetchJobFunctions,
-  fetchJobStatuses,
+  fetchCities,
+  fetchDepartments,
   fetchJobs,
+  fetchStatuses,
+  fetchTypes,
 } from "./lib/requests";
-import Filters from "./ui/Filters";
 import JobsList from "./ui/JobsList";
+import Sidebar from "./ui/Sidebar";
 
 interface Props {
   searchParams: {
@@ -17,33 +17,25 @@ interface Props {
 
 export default async function Home({ searchParams }: Props) {
   const jobs = await fetchJobs(searchParams);
-  const jobFunctions = (await fetchJobFunctions()) || [];
-  const jobStatuses = (await fetchJobStatuses()) || [];
-  const jobContexts = (await fetchJobContexts()) || [];
-  const jobCities = (await fetchJobCities()) || [];
+  const departments = (await fetchDepartments()) || [];
+  const statuses = (await fetchStatuses()) || [];
+  const types = (await fetchTypes()) || [];
+  const cities = (await fetchCities()) || [];
 
   return (
-    <div className="">
+    <div className="py-12 px-2 grid grid-cols-4 gap-2 container mx-auto relative">
       <FilterProvider>
-        <aside
-          id="default-sidebar"
-          className="fixed top-0 left-0 h-64 sm:h-screen z-10 w-full sm:w-64 transition-transform sm:translate-x-0"
-          aria-label="Sidebar"
-        >
-          <div className="h-full px-3 py-4 overflow-y-auto bg-brand-dark-blue">
-            <Filters
-              jobs={jobs}
-              jobFunctions={jobFunctions}
-              jobStatuses={jobStatuses}
-              jobContexts={jobContexts}
-              jobCities={jobCities}
-            />
-          </div>
-        </aside>
+        <Sidebar
+          jobs={jobs}
+          departments={departments}
+          statuses={statuses}
+          types={types}
+          cities={cities}
+        />
 
-        <div className="p-4 mt-64 sm:ml-64 sm:mt-0">
+        <main className="col-span-3">
           <JobsList jobs={jobs} />
-        </div>
+        </main>
       </FilterProvider>
     </div>
   );

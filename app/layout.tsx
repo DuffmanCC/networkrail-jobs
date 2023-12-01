@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
+import Footer from "./ui/Footer";
+import Header from "./ui/Header";
 
 const font = Inter({
   subsets: ["latin"],
@@ -18,14 +21,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={[
-          "container mx-auto bg-brand-blue antialiased",
-          font.className,
-        ].join(" ")}
-      >
-        {children}
+    <html lang="en" className="text-foreground bg-background">
+      <body className={["antialiased", font.className].join(" ")}>
+        <Providers>
+          <Header />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

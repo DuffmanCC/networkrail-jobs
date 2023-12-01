@@ -2,9 +2,17 @@ import { useCallback } from "react";
 
 interface Props {
   meta: {
-    function: string;
+    location: {
+      city: string;
+      postcode: string;
+    };
+    department: string;
     status: string;
-    context: string;
+    type: string;
+    salary: {
+      min: string;
+      max: string;
+    };
     dates: {
       start: string;
       end: string;
@@ -21,20 +29,55 @@ export default function SingleJobMeta({ meta }: Props) {
     }).format(dateObject);
   }, []);
 
+  const formatCurrency = useCallback((salary: string) => {
+    const number = parseInt(salary);
+
+    return new Intl.NumberFormat("en-UK", {
+      style: "currency",
+      maximumFractionDigits: 0,
+      currency: "GBP",
+    }).format(number);
+  }, []);
+
+  const metaData = [
+    {
+      label: "Location",
+      value: `${meta.location.city} - ${meta.location.postcode}`,
+    },
+    {
+      label: "Department",
+      value: meta.department,
+    },
+    {
+      label: "Type",
+      value: `${meta.status} - ${meta.type}`,
+    },
+    {
+      label: "Closing date",
+      value: formatDate(meta.dates.end),
+    },
+    {
+      label: "Salary range",
+      value:
+        meta.salary.min && meta.salary.max ? (
+          <>
+            {formatCurrency(meta.salary.min)} -{" "}
+            {formatCurrency(meta.salary.max)}
+          </>
+        ) : (
+          <span>Not specified</span>
+        ),
+    },
+  ];
+
   return (
-    <div className="text-base bg-brand-red px-6 py-3 flex flex-col gap-1 text-white">
-      <div>
-        <span className="font-bold">Department: </span>
-        {meta.function}
-      </div>
-      <div>
-        <span className="font-bold">Type: </span>
-        {meta.status} - {meta.context}
-      </div>
-      <div>
-        <span className="font-bold">Closing date: </span>
-        {formatDate(meta.dates.end)}
-      </div>
-    </div>
+    <ul className="text-base bg-brand-red px-6 py-3 flex flex-col gap-1 text-white">
+      {metaData.map(({ label, value }) => (
+        <li key={label} className="flex gap-1">
+          <span className="font-bold">{label}:</span>
+          <span>{value}</span>
+        </li>
+      ))}
+    </ul>
   );
 }

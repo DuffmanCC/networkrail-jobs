@@ -1,3 +1,11 @@
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Divider,
+} from "@nextui-org/react";
 import Link from "next/link";
 import { useCallback } from "react";
 import { JobMappedInterface } from "../lib/types";
@@ -17,46 +25,65 @@ export default function JobCard({ job }: Props) {
     }).format(number);
   }, []);
 
-  const formatDate = useCallback((date: string) => {
-    const dateObject = new Date(date);
-
-    return new Intl.DateTimeFormat("en-UK", {
-      dateStyle: "medium",
-    }).format(dateObject);
-  }, []);
+  const metaData = [
+    {
+      label: "ID",
+      value: job.id,
+    },
+    {
+      label: "Location",
+      value: `${job.location.city}`,
+    },
+    {
+      label: "Department",
+      value: job.department,
+    },
+    {
+      label: "Type",
+      value: `${job.type} - ${job.status}`,
+    },
+    {
+      label: "Closing date",
+      value: new Date(job.dates.end).toLocaleDateString("en-UK", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+    },
+  ];
 
   return (
-    <article className="bg-brand-yellow rounded-3xl shadow-xl p-6 gap-4 flex flex-col">
-      <Link
-        href={`/job/${job.id}`}
-        className="text-brand-green font-bold sm:text-2xl grow"
-      >
-        <h2 className="line-clamp-2">{job.title}</h2>
-      </Link>
+    <Card className="job-card flex flex-col hover:scale-105 hover:z-20 job-card">
+      <CardHeader className="flex grow items-start">
+        <Link href={`/job/${job.id}`}>
+          <h2 className="line-clamp-1 text-brand-green font-bold">
+            {job.title.split("-")[0]}
+          </h2>
+        </Link>
+      </CardHeader>
 
-      {job.dates.start && job.dates.end && (
-        <div className="flex flex-col gap-2">
-          <time className="text-brand-blue pt-2 font-bold text-sm">
-            {formatDate(job.dates.start)}{" "}
-            <span className="text-brand-green mr-1">to</span>
-            {formatDate(job.dates.end)}
-          </time>
-        </div>
-      )}
+      <Divider />
 
-      <div className="line-clamp-3 text-base font-light leading-relaxed text-gray-600">
-        <p className="line-clamp-3">{job.shortDescription}</p>
-      </div>
+      <CardBody className="line-clamp-3 text-base font-light leading-relaxed text-gray-600">
+        {metaData.map((meta, index) => (
+          <div key={index} className="flex gap-1 line-clamp-1">
+            <div className="font-bold line-clamp-1">{meta.label}:</div>
+            <div className="line-clamp-1">{meta.value}</div>
+          </div>
+        ))}
+      </CardBody>
 
-      <div className="flex justify-between items-end">
-        <div className="font-black flex flex-col gap-1 text-xl">
-          <div className="text-brand-red ">Salary</div>
+      <Divider />
+
+      <CardFooter className="flex justify-between items-end">
+        <div className="font-black flex flex-col gap-1 text-sm">
+          <div className="text-brand-red ">Salary range</div>
 
           {!job.salary.min && !job.salary.max ? (
-            <div className="text-brand-dark-blue">Not specified</div>
+            <div className="text-brand-dark-blue text-xs">Not specified</div>
           ) : (
-            <div className="text-brand-dark-blue">
-              {job.salary.min ? formatSalary(job.salary.max) : "Not specified"}
+            <div className="text-brand-dark-blue text-xs">
+              {job.salary.min ? formatSalary(job.salary.min) : "Not specified"}
 
               {" - "}
 
@@ -65,16 +92,12 @@ export default function JobCard({ job }: Props) {
           )}
         </div>
 
-        <div className="">
-          <Link
-            href={job.applyLink}
-            className="bg-brand-red text-white px-4 py-2 rounded-lg block"
-            target="_blank"
-          >
+        <Button size="sm">
+          <Link href={job.applyLink} target="_blank">
             Apply Now
           </Link>
-        </div>
-      </div>
-    </article>
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

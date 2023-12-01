@@ -10,5 +10,9 @@ interface Props {
 export default async function Job({ params }: Props) {
   const job = await fetchJob(params.id);
 
-  return <>{job && <SingleJob job={job} />}</>;
+  return (
+    <div className="grid justify-center items-start pt-16 min-h-screen px-4">
+      {job && <SingleJob job={job} />}
+    </div>
+  );
 }

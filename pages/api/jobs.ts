@@ -12,12 +12,7 @@ export default async function handler(
   }
 
   try {
-    const filePath = path.join(
-      process.cwd(),
-      "app",
-      "tasks",
-      "mapped-jobs-with-content.json"
-    );
+    const filePath = path.join(process.cwd(), "scraping", "mapped-jobs.json");
     const data = await fs.readFile(filePath, "utf8");
     const jobs = JSON.parse(data);
     res.status(200).json(jobs);

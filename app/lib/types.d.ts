@@ -19,32 +19,6 @@ export interface JobInterface {
   LONGITUDE?: number;
 }
 
-export type JobContentSchema = {
-  location: string;
-  department: string;
-  description: string;
-  howToApply: string;
-  aboutTheRole: {
-    essential: string[];
-    desirable: string[];
-    keyAccountabilities: string[];
-    briefDescription: string;
-  };
-};
-
-export type JobContentSchema = {
-  location: string;
-  department: string;
-  description: string;
-  howToApply: string;
-  aboutTheRole: {
-    essential: string[];
-    desirable: string[];
-    keyAccountabilities: string[];
-    briefDescription: string;
-  };
-};
-
 export interface JobMappedInterface {
   id: string;
   title: string;
@@ -55,25 +29,24 @@ export interface JobMappedInterface {
     lng: number;
   };
   salary: { min: string; max: string };
-  function: string;
-  content: JobContentSchema;
-  shortDescription: string;
+  department: string;
+  description: string;
+  content: string;
   dates: {
     start: string;
     end: string;
   };
   status: string;
-  context: string;
+  type: string;
   applyLink: string;
 }
 
-export type Filters = {
-  status?: string;
-  function?: string;
-  context?: string;
-  city?: string;
-  salaryMin?: string;
-  salaryMax?: string;
+export type FiltersType = {
+  status: string;
+  department: string;
+  type: string;
+  city: string;
+  salary: number[];
 };
 
 export type Options = SelectOption[];

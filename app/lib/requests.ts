@@ -40,10 +40,10 @@ export async function fetchJob(id: string) {
   }
 }
 
-export async function fetchJobFunctions() {
+export async function fetchDepartments() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/job-functions`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/departments`,
       { next: { revalidate: CACHE_TIME_REQUEST } }
     );
 
@@ -59,12 +59,11 @@ export async function fetchJobFunctions() {
   }
 }
 
-export async function fetchJobStatuses() {
+export async function fetchStatuses() {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/job-statuses`,
-      { next: { revalidate: CACHE_TIME_REQUEST } }
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/statuses`, {
+      next: { revalidate: CACHE_TIME_REQUEST },
+    });
 
     if (!res.ok) return;
 
@@ -78,31 +77,26 @@ export async function fetchJobStatuses() {
   }
 }
 
-export async function fetchJobContexts() {
+export async function fetchTypes() {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/job-contexts`,
-      { next: { revalidate: CACHE_TIME_REQUEST } }
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/types`, {
+      next: { revalidate: CACHE_TIME_REQUEST },
+    });
 
     if (!res.ok) return;
 
     const data = await res.json();
     return data;
   } catch (error) {
-    console.error(
-      "❌ Error fetching jobs contexts from /api/job-contexts:",
-      error
-    );
+    console.error("❌ Error fetching jobs contexts from /api/types:", error);
   }
 }
 
-export async function fetchJobCities() {
+export async function fetchCities() {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/job-cities`,
-      { next: { revalidate: CACHE_TIME_REQUEST } }
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cities`, {
+      next: { revalidate: CACHE_TIME_REQUEST },
+    });
 
     if (!res.ok) return;
 

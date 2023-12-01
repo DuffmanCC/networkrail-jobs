@@ -1,6 +1,6 @@
 import { JobInterface } from "@/app/lib/types";
 import type NodeCache from "node-cache";
-import { Filters, JobMappedInterface } from "./types";
+import { FiltersType, JobMappedInterface } from "./types";
 
 export function formatOptions(options: string[]) {
   const uniArr = [...new Set(options)];
@@ -20,33 +20,11 @@ export function getApplyLink(job: JobInterface) {
   return `https://iebsprodnwrl.opc.oracleoutsourcing.com/OA_HTML/OA.jsp?OAFunc=IRC_VIS_VAC_DISPLAY&p_svid=${job.VACANCY_ID}&p_spid=${job.POSTING_CONTENT_ID}&refsh=0`;
 }
 
-export function mapJobs(job: JobInterface, description: string) {
-  const result = {
-    id: job.VACANCY_ID,
-    title: job.DISPLAYED_JOB_TITLE,
-    location: {
-      city: job.TOWN_OR_CITY,
-      postcode: job.POSTAL_CODE,
-      lat: job.LATITUDE,
-      lng: job.LONGITUDE,
-    },
-    salary: { min: job.MIN_SALARY, max: job.MAX_SALARY },
-    function: job.FUNCTION,
-    content: JSON.parse(description) ?? {},
-    shortDescription: job.DEPARTMENT_AND_HOW_IT_RELATES_TO_THE_ROLE,
-    dates: {
-      start: job.VAC_ADVERTISE_START_DATE,
-      end: job.VAC_ADVERTISE_END_DATE,
-    },
-    status: job.EMPLOYEEMENT_STATUS,
-    context: job.VACANCY_CONTEXT,
-    applyLink: `https://iebsprodnwrl.opc.oracleoutsourcing.com/OA_HTML/OA.jsp?OAFunc=IRC_VIS_VAC_DISPLAY&p_svid=${job.VACANCY_ID}&p_spid=${job.POSTING_CONTENT_ID}&refsh=0`,
-  };
-
-  return result;
-}
-
-export function filterJobs(jobs: JobMappedInterface[], filters: Filters) {
+export function filterJobs(
+  jobs: JobMappedInterface[],
+  filters: FiltersType,
+  isSalaryActive: boolean
+) {
   let filteredJobs = [];
 
   filteredJobs = jobs.filter((job: JobMappedInterface) =>
@@ -54,16 +32,38 @@ export function filterJobs(jobs: JobMappedInterface[], filters: Filters) {
   );
 
   filteredJobs = filteredJobs.filter((job: JobMappedInterface) =>
-    !filters.function ? true : filters.function === job.function
+    !filters.department ? true : filters.department === job.department
   );
 
   filteredJobs = filteredJobs.filter((job: JobMappedInterface) =>
-    !filters.context ? true : filters.context === job.context
+    !filters.type ? true : filters.type === job.type
   );
 
   filteredJobs = filteredJobs.filter((job: JobMappedInterface) =>
     !filters.city ? true : filters.city === job.location.city
   );
+
+  filteredJobs = filteredJobs.filter((job: JobMappedInterface) => {
+    if (!isSalaryActive) {
+      return true;
+    }
+
+    if (isSalaryActive && Array.isArray(filters.salary)) {
+      return (
+        parseInt(job.salary.max) >= filters.salary[0] &&
+        parseInt(job.salary.max) <= filters.salary[1]
+      );
+    }
+  });
+
+  // remove jobs without a valid date
+  filteredJobs = filteredJobs.filter((job: JobMappedInterface) => {
+    const time = new Date(job.dates.end).getTime();
+
+    if (!isNaN(time)) {
+      return true;
+    }
+  });
 
   return filteredJobs;
 }
