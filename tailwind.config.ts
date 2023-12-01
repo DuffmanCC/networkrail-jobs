@@ -26,6 +26,9 @@ const config: Config = {
       zIndex: {
         "60": "60",
       },
+      scale: {
+        "101": "1.01",
+      },
     },
   },
   darkMode: "class",

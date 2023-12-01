@@ -23,20 +23,19 @@ export default async function Home({ searchParams }: Props) {
   const cities = (await fetchCities()) || [];
 
   return (
-    <div className="py-12 px-2 grid grid-cols-4 gap-2 container mx-auto relative">
-      <FilterProvider>
-        <Sidebar
-          jobs={jobs}
-          departments={departments}
-          statuses={statuses}
-          types={types}
-          cities={cities}
-        />
+    <FilterProvider>
+      <Sidebar
+        id="sidebar"
+        jobs={jobs}
+        departments={departments}
+        statuses={statuses}
+        types={types}
+        cities={cities}
+      />
 
-        <main className="col-span-3">
-          <JobsList jobs={jobs} />
-        </main>
-      </FilterProvider>
-    </div>
+      <main className="overflow-y-auto">
+        <JobsList jobs={jobs} />
+      </main>
+    </FilterProvider>
   );
 }

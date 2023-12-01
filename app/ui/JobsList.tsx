@@ -1,6 +1,5 @@
 "use client";
 
-import { Card } from "@nextui-org/react";
 import { useContext, useMemo } from "react";
 import { FilterContext } from "../context/filter-context";
 import { filterJobs } from "../lib/tools";
@@ -27,10 +26,6 @@ export default function JobsList({ jobs }: Props) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
-      <Card className="job-card flex flex-col hover:scale-105 hover:z-20 job-card justify-center items-center">
-        {filteredJobs.length} jobs found
-      </Card>
-
       {filteredJobs.length !== 0 ? (
         filteredJobs.map((job: JobMappedInterface) => (
           <JobCard job={job} key={job.id} />

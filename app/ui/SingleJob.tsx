@@ -19,7 +19,7 @@ export default function SingleJob({ job }: Props) {
   }, []);
 
   return (
-    <article className="bg-brand-yellow rounded-xl shadow-xl gap-4 flex flex-col max-w-4xl mx-auto py-6">
+    <article className="bg-brand-yellow rounded-xl shadow-xl gap-4 flex flex-col max-w-5xl mx-auto py-6">
       <h1 className=" text-brand-green font-bold text-2xl grow px-6">
         {job.title}
       </h1>

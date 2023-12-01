@@ -115,11 +115,7 @@ export default function Filters({
           </Select>
         ))}
 
-        <Checkbox
-          isSelected={isSalaryActive}
-          onValueChange={setIsSalaryActive}
-          className="text-white"
-        >
+        <Checkbox isSelected={isSalaryActive} onValueChange={setIsSalaryActive}>
           Salary
         </Checkbox>
 

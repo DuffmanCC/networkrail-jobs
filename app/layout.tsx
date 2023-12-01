@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="text-foreground bg-background">
-      <body className={["antialiased", font.className].join(" ")}>
+      <body className={["antialiased pb-2", font.className].join(" ")}>
         <Providers>
           <Header />
           {children}

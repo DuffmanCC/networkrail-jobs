@@ -53,8 +53,8 @@ export default function JobCard({ job }: Props) {
   ];
 
   return (
-    <Card className="job-card flex flex-col hover:scale-105 hover:z-20 job-card">
-      <CardHeader className="flex grow items-start">
+    <Card className="job-card hover:scale-101" shadow="sm">
+      <CardHeader>
         <Link href={`/job/${job.id}`}>
           <h2 className="line-clamp-1 text-brand-green font-bold">
             {job.title.split("-")[0]}

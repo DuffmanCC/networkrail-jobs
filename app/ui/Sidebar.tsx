@@ -1,9 +1,14 @@
 "use client";
 
 import { Card } from "@nextui-org/react";
+import { useContext, useMemo } from "react";
+import { FilterContext } from "../context/filter-context";
+import { filterJobs } from "../lib/tools";
+import useStore from "../store";
 import Filters from "./Filters";
 
 interface Props {
+  id: string;
   jobs: any;
   departments: { value: string; label: string }[];
   statuses: { value: string; label: string }[];
@@ -12,19 +17,33 @@ interface Props {
 }
 
 export default function Sidebar({
+  id,
   jobs,
   departments,
   statuses,
   types,
   cities,
 }: Props) {
-  // const showFilters = useStore((state: any) => state.showFilters);
-  // const classes = showFilters ? "relative" : "hidden";
+  const showFilters = useStore((state: any) => state.showFilters);
+
+  const { filters, setFilters, isSalaryActive, setIsSalaryActive } =
+    useContext(FilterContext);
+
+  const filteredJobs = useMemo(() => {
+    return filterJobs(jobs, filters, isSalaryActive);
+  }, [filters, jobs, isSalaryActive]);
+
+  filteredJobs.sort((a, b) => {
+    const aDate = new Date(a.dates.end);
+    const bDate = new Date(b.dates.end);
+
+    return bDate.getTime() - aDate.getTime();
+  });
 
   return (
-    <Card className="">
-      <aside className="h-full w-full" aria-label="Sidebar">
-        <div className="h-full px-3 py-4 overflow-y-auto w-full">
+    <Card id={id} className={!showFilters ? "hidden" : ""}>
+      <aside className="" aria-label="Sidebar">
+        <div className="p-3">
           <Filters
             jobs={jobs}
             departments={departments}
@@ -34,6 +53,10 @@ export default function Sidebar({
           />
 
           <div>{jobs.length}</div>
+
+          <Card className="job-card flex flex-col hover:scale-101 hover:z-20 job-card justify-center items-center">
+            {filteredJobs.length} jobs found
+          </Card>
         </div>
       </aside>
     </Card>
