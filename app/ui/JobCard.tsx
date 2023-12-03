@@ -64,7 +64,7 @@ export default function JobCard({ job }: Props) {
 
       <Divider />
 
-      <CardBody className="line-clamp-3 text-base font-light leading-relaxed text-gray-600">
+      <CardBody className="line-clamp-3 text-base font-light leading-relaxed">
         {metaData.map((meta, index) => (
           <div key={index} className="flex gap-1 line-clamp-1">
             <div className="font-bold line-clamp-1">{meta.label}:</div>
@@ -80,9 +80,9 @@ export default function JobCard({ job }: Props) {
           <div className="text-brand-red ">Salary range</div>
 
           {!job.salary.min && !job.salary.max ? (
-            <div className="text-brand-dark-blue text-xs">Not specified</div>
+            <div className="text-xs">Not specified</div>
           ) : (
-            <div className="text-brand-dark-blue text-xs">
+            <div className="text-xs">
               {job.salary.min ? formatSalary(job.salary.min) : "Not specified"}
 
               {" - "}

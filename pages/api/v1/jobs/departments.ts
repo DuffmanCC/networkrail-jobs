@@ -7,10 +7,13 @@ export default async function handler(
   res: NextApiResponse<{} | { error: string }>
 ) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs`
+    );
 
-    const data: JobMappedInterface[] = await response.json();
-    const departments: string[] = data.map((job) => {
+    const data: { jobsLength: string; jobs: JobMappedInterface[] } =
+      await response.json();
+    const departments: string[] = data.jobs.map((job) => {
       return job.department;
     });
 

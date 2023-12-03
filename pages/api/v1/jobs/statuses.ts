@@ -7,14 +7,17 @@ export default async function handler(
   res: NextApiResponse<{} | { error: string }>
 ) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs`
+    );
 
-    const data: JobMappedInterface[] = await response.json();
-    const cities: string[] = data.map((job) => {
-      return job.location.city;
+    const data: { jobsLength: string; jobs: JobMappedInterface[] } =
+      await response.json();
+    const statuses: string[] = data.jobs.map((job) => {
+      return job.status;
     });
 
-    const result = formatOptions(cities);
+    const result = formatOptions(statuses);
 
     res.status(200).json(result);
   } catch (error) {

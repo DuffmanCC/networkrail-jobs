@@ -49,6 +49,4 @@ export type FiltersType = {
   salary: number[];
 };
 
-export type Options = SelectOption[];
-
-export type SelectOption = { value: string; label: string };
+export type Options = array[];

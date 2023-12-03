@@ -21,7 +21,7 @@ export default function JobsList({ jobs }: Props) {
     const aDate = new Date(a.dates.end);
     const bDate = new Date(b.dates.end);
 
-    return bDate.getTime() - aDate.getTime();
+    return bDate.getTime() + aDate.getTime();
   });
 
   return (

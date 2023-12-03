@@ -3,17 +3,13 @@ import type NodeCache from "node-cache";
 import { FiltersType, JobMappedInterface } from "./types";
 
 export function formatOptions(options: string[]) {
-  const uniArr = [...new Set(options)];
+  let uniqueArr = [...new Set(options)];
 
-  uniArr.sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
-  uniArr.splice(uniArr.indexOf(""), 1);
+  uniqueArr = uniqueArr.filter((item) => item);
 
-  return uniArr.map((item) => {
-    return {
-      value: item,
-      label: item,
-    };
-  });
+  uniqueArr.sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
+
+  return uniqueArr;
 }
 
 export function getApplyLink(job: JobInterface) {

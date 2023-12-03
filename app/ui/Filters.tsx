@@ -63,26 +63,23 @@ export default function Filters({
   }[];
 
   const mapCities = cities.map((city) => ({
-    ...city,
-    label: `${city.label} (${getNumberOfItems("city", city.value)})`,
+    value: city,
+    label: `${city} (${getNumberOfItems("city", city)})`,
   }));
 
   const mapDepartments = departments.map((department) => ({
-    ...department,
-    label: `${department.label} (${getNumberOfItems(
-      "department",
-      department.value
-    )})`,
+    value: department,
+    label: `${department} (${getNumberOfItems("department", department)})`,
   }));
 
   const mapTypes = types.map((type) => ({
-    ...type,
-    label: `${type.label} (${getNumberOfItems("type", type.value)})`,
+    value: type,
+    label: `${type} (${getNumberOfItems("type", type)})`,
   }));
 
   const mapStatuses = statuses.map((status) => ({
-    ...status,
-    label: `${status.label} (${getNumberOfItems("status", status.value)})`,
+    value: status,
+    label: `${status} (${getNumberOfItems("status", status)})`,
   }));
 
   const selectFilters: SelectFiltersType = [
@@ -108,7 +105,11 @@ export default function Filters({
             }}
           >
             {options.map((el) => (
-              <SelectItem key={el.value} value={el.value}>
+              <SelectItem
+                key={el.value}
+                value={el.value}
+                className="text-foreground bg-background"
+              >
                 {el.label}
               </SelectItem>
             ))}
@@ -120,7 +121,7 @@ export default function Filters({
         </Checkbox>
 
         <Slider
-          label="Price Range"
+          label="Salary Range"
           isDisabled={!isSalaryActive}
           step={5000}
           minValue={20000}
@@ -137,7 +138,6 @@ export default function Filters({
             currency: "GBP",
             minimumFractionDigits: 0,
           }}
-          className="max-w-md"
         />
         <Button onClick={clearFilters}>Clear filters</Button>
       </form>
