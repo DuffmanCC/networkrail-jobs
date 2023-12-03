@@ -9,10 +9,14 @@ export default async function handler(
     query: { id },
   } = req;
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs`
+  );
 
-  const jobs: JobMappedInterface[] = await response.json();
-  const job = jobs?.find((job) => {
+  const data: { jobsLength: number; jobs: JobMappedInterface[] } =
+    await response.json();
+
+  const job = data.jobs?.find((job) => {
     return job.id === id;
   });
 

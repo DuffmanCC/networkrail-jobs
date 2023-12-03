@@ -19,18 +19,18 @@ export default function SingleJob({ job }: Props) {
   }, []);
 
   return (
-    <article className="bg-brand-yellow rounded-xl shadow-xl gap-4 flex flex-col max-w-5xl mx-auto py-6">
-      <h1 className=" text-brand-green font-bold text-2xl grow px-6">
+    <article className="bg-brand-yellow rounded-xl shadow-xl gap-2 sm:gap-4 flex flex-col max-w-4xl py-4 sm:py-6">
+      <h1 className="text-brand-green font-bold text-xl sm:text-2xl px-4 sm:px-6 flex items-center">
         {job.title}
       </h1>
 
       <SingleJobMeta meta={job} />
 
-      <div className="text-base font-light leading-relaxed text-gray-600 px-6 flex flex-col gap-4">
+      <div className="text-base font-light leading-relaxed text-gray-600 px-4 sm:px-6 flex flex-col gap-4">
         {job.description}
       </div>
 
-      <div className="flex justify-end px-6">
+      <div className="flex justify-end px-4 sm:px-6">
         {job.applyLink && (
           <Link
             href={job.applyLink}

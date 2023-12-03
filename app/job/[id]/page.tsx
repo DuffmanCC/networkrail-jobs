@@ -12,8 +12,8 @@ export default async function Job({ params }: Props) {
 
   return (
     <div
-      className="grid justify-center items-start pt-16 min-h-screen px-4"
-      style={{ gridColumn: "2/3" }}
+      className="flex justify-center items-start pr-2 overflow-y-auto relative z-50"
+      style={{ gridColumn: "1/3", gridRow: "2/3" }}
     >
       <SingleJob job={job} />
     </div>
