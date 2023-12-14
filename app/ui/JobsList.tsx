@@ -4,7 +4,6 @@ import { useContext, useMemo } from "react";
 import { FilterContext } from "../context/filter-context";
 import { filterJobs } from "../lib/tools";
 import { JobMappedInterface } from "../lib/types";
-import useStore from "../store";
 import JobCard from "./JobCard";
 
 interface Props {
@@ -13,7 +12,6 @@ interface Props {
 
 export default function JobsList({ jobs }: Props) {
   const { filters, isSalaryActive } = useContext(FilterContext);
-  const showMap = useStore((state: any) => state.showMap);
 
   const filteredJobs = useMemo(() => {
     return filterJobs(jobs, filters, isSalaryActive);
@@ -27,12 +25,7 @@ export default function JobsList({ jobs }: Props) {
   });
 
   return (
-    <div
-      className={[
-        showMap ? "hidden" : "grid",
-        "grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2",
-      ].join(" ")}
-    >
+    <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
       {filteredJobs.length !== 0 ? (
         filteredJobs.map((job: JobMappedInterface) => (
           <JobCard job={job} key={job.jobId} />

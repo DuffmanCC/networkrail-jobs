@@ -3,11 +3,10 @@
 import { Card, Link, Switch } from "@nextui-org/react";
 import { useEffect } from "react";
 import useStore from "../store";
-import { FilterIcon, HomeIcon, MapIcon, MoonIcon, SunIcon } from "./Icons";
+import { FilterIcon, HomeIcon, MoonIcon, SunIcon } from "./Icons";
 
 export default function Header() {
   const showFilters = useStore((state: any) => state.showFilters);
-  const showMap = useStore((state: any) => state.showMap);
   const isDarkMode = useStore((state: any) => state.isDarkMode);
 
   function handleToggleFilters() {
@@ -51,10 +50,6 @@ export default function Header() {
               className="sm:hidden"
             >
               <FilterIcon className="w-6 h-6 text-gray-400" />
-            </button>
-
-            <button onClick={handleToggleMap} aria-label="map toggle button">
-              <MapIcon className="w-6 h-6 text-gray-400" />
             </button>
           </div>
 

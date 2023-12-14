@@ -6,7 +6,6 @@ import {
   fetchStatuses,
   fetchTypes,
 } from "./lib/requests";
-import GoogleMap from "./ui/GoogleMap";
 import JobsList from "./ui/JobsList";
 import Sidebar from "./ui/Sidebar";
 
@@ -35,8 +34,6 @@ export default async function Home({ searchParams }: Props) {
       />
 
       <main className="overflow-y-auto">
-        <GoogleMap jobs={jobs} />
-
         <JobsList jobs={jobs} />
       </main>
     </FilterProvider>

@@ -5,12 +5,10 @@ import useStore from "../store";
 
 export default function Footer() {
   const showFilters = useStore((state: any) => state.showFilters);
-  const showMap = useStore((state: any) => state.showMap);
   const isDarkMode = useStore((state: any) => state.isDarkMode);
 
   const obj = {
     showFilters,
-    showMap,
     isDarkMode,
   };
 
