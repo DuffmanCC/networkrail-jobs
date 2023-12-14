@@ -15,20 +15,18 @@ interface Props {
 }
 
 export default function JobCard({ job }: Props) {
-  const formatSalary = useCallback((salary: string) => {
-    const number = parseInt(salary);
-
+  const formatSalary = useCallback((salary: number) => {
     return new Intl.NumberFormat("en-UK", {
       style: "currency",
       maximumFractionDigits: 0,
       currency: "GBP",
-    }).format(number);
+    }).format(salary);
   }, []);
 
   const metaData = [
     {
       label: "ID",
-      value: job.id,
+      value: job.jobId,
     },
     {
       label: "Location",
@@ -53,9 +51,13 @@ export default function JobCard({ job }: Props) {
   ];
 
   return (
-    <Card className="job-card hover:scale-101" shadow="sm">
+    <Card
+      className="job-card hover:scale-101 bg-slate-200 dark:bg-slate-800"
+      shadow="none"
+      radius="sm"
+    >
       <CardHeader>
-        <Link href={`/job/${job.id}`}>
+        <Link href={`/job/${job.jobId}`}>
           <h2 className="line-clamp-1 text-brand-green font-bold">
             {job.title.split("-")[0]}
           </h2>
@@ -87,7 +89,7 @@ export default function JobCard({ job }: Props) {
 
               {" - "}
 
-              {job.salary.min ? formatSalary(job.salary.max) : "Not specified"}
+              {job.salary.max ? formatSalary(job.salary.max) : "Not specified"}
             </div>
           )}
         </div>

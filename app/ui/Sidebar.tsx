@@ -41,7 +41,15 @@ export default function Sidebar({
   });
 
   return (
-    <Card id={id} className={!showFilters ? "hidden" : ""}>
+    <Card
+      id={id}
+      className={[
+        !showFilters ? "hidden " : "",
+        "bg-slate-200 dark:bg-slate-800",
+      ].join(" ")}
+      radius="sm"
+      shadow="none"
+    >
       <aside className="" aria-label="Sidebar">
         <div className="p-3">
           <Filters
@@ -52,9 +60,12 @@ export default function Sidebar({
             cities={cities}
           />
 
-          <div>{jobs.length}</div>
+          <div>{jobs?.length}</div>
 
-          <Card className="job-card flex flex-col hover:scale-101 hover:z-20 job-card justify-center items-center">
+          <Card
+            className="job-card flex flex-col hover:scale-101 hover:z-20 job-card justify-center items-center"
+            radius="sm"
+          >
             {filteredJobs.length} jobs found
           </Card>
         </div>

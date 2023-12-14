@@ -10,18 +10,18 @@ interface Props {
     status: string;
     type: string;
     salary: {
-      min: string;
-      max: string;
+      min: number | null;
+      max: number | null;
     };
     dates: {
-      start: string;
-      end: string;
+      start: Date | string;
+      end: Date | string;
     };
   };
 }
 
 export default function SingleJobMeta({ meta }: Props) {
-  const formatDate = useCallback((date: string) => {
+  const formatDate = useCallback((date: Date | string) => {
     const dateObject = new Date(date);
 
     return new Intl.DateTimeFormat("en-UK", {
@@ -29,14 +29,12 @@ export default function SingleJobMeta({ meta }: Props) {
     }).format(dateObject);
   }, []);
 
-  const formatCurrency = useCallback((salary: string) => {
-    const number = parseInt(salary);
-
+  const formatCurrency = useCallback((salary: number) => {
     return new Intl.NumberFormat("en-UK", {
       style: "currency",
       maximumFractionDigits: 0,
       currency: "GBP",
-    }).format(number);
+    }).format(salary);
   }, []);
 
   const metaData = [
@@ -61,7 +59,7 @@ export default function SingleJobMeta({ meta }: Props) {
       value:
         meta.salary.min && meta.salary.max ? (
           <>
-            {formatCurrency(meta.salary.min)} -{" "}
+            ${formatCurrency(meta.salary.min)} - $
             {formatCurrency(meta.salary.max)}
           </>
         ) : (

@@ -13,6 +13,7 @@ export default async function handler(
 
     const data: { jobsLength: string; jobs: JobMappedInterface[] } =
       await response.json();
+
     const cities: string[] = data.jobs.map((job) => {
       return job.location.city;
     });
@@ -21,6 +22,8 @@ export default async function handler(
 
     res.status(200).json(result);
   } catch (error) {
+    console.log("🚀 ~ file: cities.ts:25 ~ error:", error);
+
     res.status(500).json({ error: "error from the server" });
   }
 }

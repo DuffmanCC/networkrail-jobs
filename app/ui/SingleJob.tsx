@@ -18,13 +18,31 @@ export default function SingleJob({ job }: Props) {
     }).format(number);
   }, []);
 
+  const jobMeta = {
+    location: {
+      city: job.location.city,
+      postcode: job.location.postcode,
+    },
+    department: job.department,
+    status: job.status,
+    type: job.type,
+    salary: {
+      min: job.salary.min,
+      max: job.salary.max,
+    },
+    dates: {
+      start: job.dates.start,
+      end: job.dates.end,
+    },
+  };
+
   return (
     <article className="bg-brand-yellow rounded-xl shadow-xl gap-2 sm:gap-4 flex flex-col max-w-4xl py-4 sm:py-6">
       <h1 className="text-brand-green font-bold text-xl sm:text-2xl px-4 sm:px-6 flex items-center">
         {job.title}
       </h1>
 
-      <SingleJobMeta meta={job} />
+      <SingleJobMeta meta={jobMeta} />
 
       <div className="text-base font-light leading-relaxed text-gray-600 px-4 sm:px-6 flex flex-col gap-4">
         {job.description}

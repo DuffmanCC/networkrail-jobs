@@ -15,9 +15,10 @@ export async function fetchDataFromNetworRail() {
 
 export async function fetchJobs(searchParams: { [key: string]: string }) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/v1/jobs`);
 
     const data = await res.json();
+
     return data.jobs;
   } catch (error) {
     console.error("❌ Error fetching jobs from /api/v1/jobs:", error);

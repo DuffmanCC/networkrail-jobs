@@ -106,7 +106,7 @@ const init = async () => {
     await Promise.all(jobs.map(saveDescriptionToFile));
     const mappedJobs = await Promise.all(response.map(mapJob));
 
-    const filePath = path.join(process.cwd(), "scraping", `mapped-jobs.json`);
+    const filePath = path.join(process.cwd(), "scraping", "mapped-jobs.json");
 
     await fs.writeFile(filePath, JSON.stringify(mappedJobs, null, 2));
   } catch (error) {

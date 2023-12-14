@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/lib/oracle-fetch.js", "app/tasks/get-jobs.js", "app/tasks/schema.mjs"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/lib/oracle-fetch.js", "app/tasks/get-jobs.js", "app/tasks/schema.mjs", "app/lib/connect-db.mts", "app/db/models/Job.js"],
   "exclude": ["node_modules"]
 }

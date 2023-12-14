@@ -21,9 +21,9 @@ export function filterJobs(
   filters: FiltersType,
   isSalaryActive: boolean
 ) {
-  let filteredJobs = [];
+  let filteredJobs = jobs;
 
-  filteredJobs = jobs.filter((job: JobMappedInterface) =>
+  filteredJobs = filteredJobs.filter((job: JobMappedInterface) =>
     !filters.status ? true : filters.status === job.status
   );
 
@@ -44,10 +44,10 @@ export function filterJobs(
       return true;
     }
 
-    if (isSalaryActive && Array.isArray(filters.salary)) {
+    if (isSalaryActive && Array.isArray(filters.salary) && job.salary.max) {
       return (
-        parseInt(job.salary.max) >= filters.salary[0] &&
-        parseInt(job.salary.max) <= filters.salary[1]
+        job.salary.max >= filters.salary[0] &&
+        job.salary.max <= filters.salary[1]
       );
     }
   });

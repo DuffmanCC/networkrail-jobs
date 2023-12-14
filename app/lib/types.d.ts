@@ -20,7 +20,7 @@ export interface JobInterface {
 }
 
 export interface JobMappedInterface {
-  id: string;
+  jobId: string;
   title: string;
   location: {
     city: string;
@@ -28,13 +28,16 @@ export interface JobMappedInterface {
     lat: number;
     lng: number;
   };
-  salary: { min: string; max: string };
+  salary: {
+    min: number | null;
+    max: number | null;
+  };
   department: string;
   description: string;
   content: string;
   dates: {
-    start: string;
-    end: string;
+    start: Date;
+    end: Date;
   };
   status: string;
   type: string;

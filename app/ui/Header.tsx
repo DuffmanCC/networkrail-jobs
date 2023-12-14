@@ -33,7 +33,11 @@ export default function Header() {
   }, [isDarkMode]);
 
   return (
-    <Card className="sm:col-span-2">
+    <Card
+      className="sm:col-span-2 bg-slate-200 dark:bg-slate-800"
+      radius="sm"
+      shadow="none"
+    >
       <header>
         <div className="flex justify-between items-center py-2 px-2">
           <div className="flex gap-2">

@@ -1,5 +1,6 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { Job } from "@/app/db/models/Job";
+import dbConnect from "@/app/db/mongo";
+import { JobMappedInterface } from "@/app/lib/types";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -8,40 +9,65 @@ export async function GET(req: Request) {
   const department = searchParams.get("department");
   const status = searchParams.get("status");
   const type = searchParams.get("type");
+  const from = searchParams.get("from");
+  const to = searchParams.get("to");
+  console.log("🚀 ~ file: route.ts:14 ~ GET ~ to:", to);
 
-  const filePath = path.join(process.cwd(), "scraping", "mapped-jobs.json");
-  const data = await fs.readFile(filePath, "utf8");
-  const jobs = JSON.parse(data);
-  let filteredJobs = [];
+  await dbConnect();
 
-  if (city) {
-    filteredJobs = jobs.filter((job: any) => {
-      return job.location.city === city;
+  try {
+    const jobs: JobMappedInterface[] = await Job.find({});
+
+    let filteredJobs = jobs;
+
+    if (city) {
+      filteredJobs = filteredJobs.filter((job) => job.location.city === city);
+    }
+
+    if (department) {
+      filteredJobs = filteredJobs.filter(
+        (job) => job.department === department
+      );
+    }
+
+    if (status) {
+      filteredJobs = filteredJobs.filter((job) => job.status === status);
+    }
+
+    if (type) {
+      filteredJobs = filteredJobs.filter((job) => job.type === type);
+    }
+
+    if (from) {
+      const [day, month, year] = from.split("-");
+
+      const fromDate = new Date(`${year}-${month}-${day}`);
+
+      filteredJobs = filteredJobs.filter((job) => job.dates.start >= fromDate);
+    }
+
+    if (to) {
+      const [day, month, year] = to.split("-");
+
+      const toDate = new Date(`${year}-${month}-${day}`);
+
+      filteredJobs = filteredJobs.filter((job) => job.dates.end <= toDate);
+    }
+
+    return Response.json({
+      success: true,
+      jobsCount: filteredJobs.length,
+      filterBy: {
+        city,
+        department,
+        status,
+        type,
+        from,
+        to,
+      },
+      data: filteredJobs,
     });
+  } catch (error) {
+    return Response.json({ error: "error from the server" });
   }
-
-  if (department) {
-    filteredJobs = jobs.filter((job: any) => {
-      return job.department === department;
-    });
-  }
-
-  if (status) {
-    filteredJobs = jobs.filter((job: any) => {
-      return job.status === status;
-    });
-  }
-
-  if (type) {
-    filteredJobs = jobs.filter((job: any) => {
-      return job.type === type;
-    });
-  }
-
-  // if no query params are provided, return all jobs
-  if (!city && !department && !status && !type) {
-    filteredJobs = jobs;
-  }
-
-  return Response.json({ jobsLength: filteredJobs.length, jobs: filteredJobs });
 }
