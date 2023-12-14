@@ -1,6 +1,7 @@
 "use client";
 
-import { Options } from "@/app/lib/types";
+import useFilters from "@/app/hooks/useFilters";
+import { FilterProps } from "@/app/lib/types";
 import {
   Button,
   Checkbox,
@@ -8,16 +9,6 @@ import {
   SelectItem,
   Slider,
 } from "@nextui-org/react";
-import { useContext } from "react";
-import { FilterContext } from "../context/filter-context";
-
-interface Props {
-  jobs: [];
-  departments: Options;
-  statuses: Options;
-  types: Options;
-  cities: Options;
-}
 
 export default function Filters({
   jobs,
@@ -25,69 +16,16 @@ export default function Filters({
   statuses,
   types,
   cities,
-}: Props) {
-  const { filters, setFilters, isSalaryActive, setIsSalaryActive } =
-    useContext(FilterContext);
-
-  function handleSelectChange(
-    value: string,
-    filterKey: "status" | "department" | "type" | "city"
-  ) {
-    setFilters({ ...filters, [filterKey]: value });
-  }
-
-  function clearFilters() {
-    setIsSalaryActive(false);
-
-    setFilters({
-      status: "",
-      type: "",
-      city: "",
-      department: "",
-      salary: [20000, 120000],
-    });
-  }
-
-  function getNumberOfItems(key: string, value: string) {
-    if (key === "city") {
-      return jobs.filter((job: any) => job.location.city === value).length;
-    }
-
-    return jobs.filter((job: any) => job[key] === value).length;
-  }
-
-  type SelectFiltersType = {
-    options: Options;
-    label: string;
-    filterKey: "status" | "department" | "type" | "city";
-  }[];
-
-  const mapCities = cities.map((city) => ({
-    value: city,
-    label: `${city} (${getNumberOfItems("city", city)})`,
-  }));
-
-  const mapDepartments = departments.map((department) => ({
-    value: department,
-    label: `${department} (${getNumberOfItems("department", department)})`,
-  }));
-
-  const mapTypes = types.map((type) => ({
-    value: type,
-    label: `${type} (${getNumberOfItems("type", type)})`,
-  }));
-
-  const mapStatuses = statuses.map((status) => ({
-    value: status,
-    label: `${status} (${getNumberOfItems("status", status)})`,
-  }));
-
-  const selectFilters: SelectFiltersType = [
-    { options: mapStatuses, label: "Status", filterKey: "status" },
-    { options: mapDepartments, label: "Department", filterKey: "department" },
-    { options: mapTypes, label: "Type", filterKey: "type" },
-    { options: mapCities, label: "City", filterKey: "city" },
-  ];
+}: FilterProps) {
+  const {
+    filters,
+    isSalaryActive,
+    handleSelectChange,
+    clearFilters,
+    selectFilters,
+    setIsSalaryActive,
+    setFilters,
+  } = useFilters({ jobs, departments, statuses, types, cities });
 
   return (
     <>

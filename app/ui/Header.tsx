@@ -1,73 +1,116 @@
 "use client";
 
-import { Card, Link, Switch } from "@nextui-org/react";
-import { useEffect } from "react";
-import useStore from "../store";
-import { FilterIcon, HomeIcon, MoonIcon, SunIcon } from "./Icons";
+import useHeader from "@/app/hooks/useHeader";
+import { Button, Card, Link, Switch } from "@nextui-org/react";
+import Image from "next/image";
+
+import { FilterIcon, GitHubIcon, HomeIcon, MoonIcon, SunIcon } from "./Icons";
 
 export default function Header() {
-  const showFilters = useStore((state: any) => state.showFilters);
-  const isDarkMode = useStore((state: any) => state.isDarkMode);
-
-  function handleToggleFilters() {
-    useStore.setState({ showFilters: !showFilters });
-  }
-
-  function handleToggleMap() {
-    useStore.setState({ showMap: !showMap });
-  }
-
-  function handleTooggleDarkMode() {
-    useStore.setState({ isDarkMode: !isDarkMode });
-  }
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-    } else {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDarkMode]);
+  const {
+    isExplainLayer,
+    handleToggleFilters,
+    handleTooggleDarkMode,
+    handleCloseExplainLayer,
+  } = useHeader();
 
   return (
-    <Card
-      className="sm:col-span-2 bg-slate-200 dark:bg-slate-800"
-      radius="sm"
-      shadow="none"
-    >
-      <header>
-        <div className="flex justify-between items-center py-2 px-2">
-          <div className="flex gap-2">
-            <Link href="/" aria-label="home">
-              <HomeIcon className="w-6 h-6 text-gray-400" />
-            </Link>
+    <>
+      <Card
+        className="sm:col-span-2 bg-slate-200 dark:bg-slate-800"
+        radius="sm"
+        shadow="none"
+      >
+        <header>
+          <div className="flex justify-between items-center py-2 px-2">
+            <div className="flex gap-2">
+              <Link href="/" aria-label="home" className="hover:scale-105">
+                <HomeIcon className="w-6 h-6 text-gray-400" />
+              </Link>
 
-            <button
-              onClick={handleToggleFilters}
-              aria-label="filter toggle button"
-              className="sm:hidden"
-            >
-              <FilterIcon className="w-6 h-6 text-gray-400" />
-            </button>
+              <button
+                onClick={handleToggleFilters}
+                aria-label="filter toggle button"
+                className="sm:hidden hover:scale-105"
+              >
+                <FilterIcon className="w-6 h-6 text-gray-400" />
+              </button>
+            </div>
+
+            <div className="flex gap-2">
+              <Link
+                href="https://github.com/DuffmanCC/networkrail-jobs"
+                aria-label="https://github.com/DuffmanCC/networkrail-jobs"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:scale-105"
+              >
+                <GitHubIcon className="w-6 h-6 text-gray-400" />
+              </Link>
+
+              <Switch
+                aria-label="dark mode toggle"
+                onValueChange={handleTooggleDarkMode}
+                defaultSelected
+                size="sm"
+                thumbIcon={({ isSelected, className }) =>
+                  isSelected ? (
+                    <SunIcon className={className} />
+                  ) : (
+                    <MoonIcon className={className} />
+                  )
+                }
+              />
+            </div>
           </div>
+        </header>
+      </Card>
 
-          <Switch
-            aria-label="dark mode toggle"
-            onValueChange={handleTooggleDarkMode}
-            defaultSelected
-            size="sm"
-            thumbIcon={({ isSelected, className }) =>
-              isSelected ? (
-                <SunIcon className={className} />
-              ) : (
-                <MoonIcon className={className} />
-              )
-            }
-          />
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-80 z-50 text-white justify-center items-center ${
+          isExplainLayer ? "flex" : "hidden"
+        }`}
+      >
+        <Image
+          src="/dark-mode.png"
+          alt="arrow"
+          className="absolute top-8 right-8"
+          width="200"
+          height="100"
+        />
+
+        <Image
+          src="/filters.png"
+          alt="arrow"
+          className="absolute top-8 left-12"
+          width="150"
+          height="100"
+        />
+
+        <div className="flex flex-col gap-8 max-w-xs">
+          <p>
+            This is an alternative and version of{" "}
+            <a
+              href="https://www.networkrail.co.uk/careers/careers-search/"
+              className="decoration-current underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Networwork Rail
+            </a>{" "}
+            jobs
+          </p>
+
+          <Button
+            className="text-white text-2xl"
+            size="lg"
+            variant="bordered"
+            onClick={handleCloseExplainLayer}
+          >
+            Ok
+          </Button>
         </div>
-      </header>
-    </Card>
+      </div>
+    </>
   );
 }

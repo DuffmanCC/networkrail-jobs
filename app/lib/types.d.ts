@@ -53,3 +53,11 @@ export type FiltersType = {
 };
 
 export type Options = array[];
+
+export interface FilterProps {
+  jobs: [];
+  departments: Options;
+  statuses: Options;
+  types: Options;
+  cities: Options;
+}

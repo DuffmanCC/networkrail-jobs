@@ -57,8 +57,8 @@ export default function JobCard({ job }: Props) {
       radius="sm"
     >
       <CardHeader>
-        <Link href={`/job/${job.jobId}`}>
-          <h2 className="line-clamp-1 text-brand-green font-bold">
+        <Link href={`/job/${job.jobId}`} className="">
+          <h2 className="line-clamp-1 text-brand-green font-bold underline decoration-current">
             {job.title.split("-")[0]}
           </h2>
         </Link>
@@ -95,7 +95,7 @@ export default function JobCard({ job }: Props) {
         </div>
 
         <Button size="sm">
-          <Link href={job.applyLink} target="_blank">
+          <Link href={job.applyLink} target="_blank" rel="noreferrer">
             Apply Now
           </Link>
         </Button>

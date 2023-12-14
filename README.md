@@ -20,12 +20,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Network Rail jobs API
 
-[http://localhost:3000/api/v1/jobs](http://localhost:3000/api/v1/jobs)
+[/api/v1/jobs](http://localhost:3000/api/v1/jobs)
 
-[http://localhost:3000/api/v1/jobs/cities](http://localhost:3000/api/v1/jobs/cities)
+[/v1/jobs/cities](http://localhost:3000/api/v1/jobs/cities)
 
-[http://localhost:3000/api/v1/jobs/statuses](http://localhost:3000/api/v1/jobs/statuses)
+[/v1/jobs/statuses](http://localhost:3000/api/v1/jobs/statuses)
 
-[http://localhost:3000/api/v1/jobs/types](http://localhost:3000/api/v1/jobs/types)
+[/v1/jobs/types](http://localhost:3000/api/v1/jobs/types)
 
-[http://localhost:3000/api/v1/jobs/departmets](http://localhost:3000/api/v1/jobs/departments)
+[/v1/jobs/departmets](http://localhost:3000/api/v1/jobs/departments)

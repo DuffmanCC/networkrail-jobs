@@ -24,15 +24,19 @@ export default function JobsList({ jobs }: Props) {
     return bDate.getTime() + aDate.getTime();
   });
 
+  if (filteredJobs.length === 0) {
+    return (
+      <div className="font-bold flex justify-center items-center h-full">
+        No jobs found
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
-      {filteredJobs.length !== 0 ? (
-        filteredJobs.map((job: JobMappedInterface) => (
-          <JobCard job={job} key={job.jobId} />
-        ))
-      ) : (
-        <div className="text-center">No jobs found</div>
-      )}
+      {filteredJobs.map((job: JobMappedInterface) => (
+        <JobCard job={job} key={job.jobId} />
+      ))}
     </div>
   );
 }

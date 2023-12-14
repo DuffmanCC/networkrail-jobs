@@ -51,7 +51,7 @@ export default function Sidebar({
       shadow="none"
     >
       <aside className="" aria-label="Sidebar">
-        <div className="p-3">
+        <div className="p-3 flex flex-col gap-3">
           <Filters
             jobs={jobs}
             departments={departments}
@@ -60,14 +60,13 @@ export default function Sidebar({
             cities={cities}
           />
 
-          <div>{jobs?.length}</div>
-
-          <Card
-            className="job-card flex flex-col hover:scale-101 hover:z-20 job-card justify-center items-center"
-            radius="sm"
-          >
-            {filteredJobs.length} jobs found
-          </Card>
+          <div className="flex justify-center items-center font-bold">
+            {filteredJobs.length !== 0
+              ? filteredJobs.length === 1
+                ? "1 job found"
+                : `${filteredJobs.length} jobs found`
+              : "No jobs found"}
+          </div>
         </div>
       </aside>
     </Card>

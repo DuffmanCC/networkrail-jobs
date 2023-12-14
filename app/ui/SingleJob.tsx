@@ -54,6 +54,7 @@ export default function SingleJob({ job }: Props) {
             href={job.applyLink}
             className="bg-brand-red text-white px-4 py-2 rounded-lg"
             target="_blank"
+            rel="noreferrer"
           >
             Apply Now
           </Link>
