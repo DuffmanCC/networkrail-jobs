@@ -30,6 +30,7 @@ export async function fetchJobs(
       `❌ Error fetching jobs from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs:`,
       error
     );
+    return [];
   }
 }
 
