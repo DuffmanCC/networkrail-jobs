@@ -15,7 +15,7 @@ export async function fetchDataFromNetworRail() {
 
 export async function fetchJobs(
   searchParams: { [key: string]: string },
-  apiVersion = "v1"
+  apiVersion = "v2"
 ) {
   try {
     const res = await fetch(
@@ -30,10 +30,10 @@ export async function fetchJobs(
   }
 }
 
-export async function fetchJob(id: string) {
+export async function fetchJob(id: string, apiVersion = "v2") {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/job/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/job/${id}`,
       { next: { revalidate: CACHE_TIME_REQUEST } }
     );
 
@@ -46,10 +46,10 @@ export async function fetchJob(id: string) {
   }
 }
 
-export async function fetchDepartments() {
+export async function fetchDepartments(apiVersion = "v2") {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/departments`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/departments`,
       { next: { revalidate: CACHE_TIME_REQUEST } }
     );
 
@@ -59,16 +59,16 @@ export async function fetchDepartments() {
     return data;
   } catch (error) {
     console.error(
-      "❌ Error fetching jobs functions from /api/v1/jobs/departments:",
+      `❌ Error fetching jobs functions from /api/${apiVersion}/jobs/departments:`,
       error
     );
   }
 }
 
-export async function fetchStatuses() {
+export async function fetchStatuses(apiVersion = "v2") {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/statuses`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/statuses`,
       {
         next: { revalidate: CACHE_TIME_REQUEST },
       }
@@ -80,16 +80,16 @@ export async function fetchStatuses() {
     return data;
   } catch (error) {
     console.error(
-      "❌ Error fetching jobs statuses from /api/v1/jobs/statuses:",
+      `❌ Error fetching jobs statuses from /api/${apiVersion}/jobs/statuses:`,
       error
     );
   }
 }
 
-export async function fetchTypes() {
+export async function fetchTypes(apiVersion = "v2") {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/types`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/types`,
       {
         next: { revalidate: CACHE_TIME_REQUEST },
       }
@@ -101,16 +101,16 @@ export async function fetchTypes() {
     return data;
   } catch (error) {
     console.error(
-      "❌ Error fetching jobs contexts from /api/v1/jobs/types:",
+      `❌ Error fetching jobs contexts from /api/${apiVersion}/jobs/types:`,
       error
     );
   }
 }
 
-export async function fetchCities() {
+export async function fetchCities(apiVersion = "v2") {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/cities`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/cities`,
       {
         next: { revalidate: CACHE_TIME_REQUEST },
       }
@@ -122,7 +122,7 @@ export async function fetchCities() {
     return data;
   } catch (error) {
     console.error(
-      "❌ Error fetching jobs cities from /api/v1/jobs/cities:",
+      `❌ Error fetching jobs cities from /api/${apiVersion}/jobs/cities:`,
       error
     );
   }

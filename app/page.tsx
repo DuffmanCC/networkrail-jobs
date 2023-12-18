@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default async function Home({ searchParams }: Props) {
-  const jobs = await fetchJobs(searchParams, "v2");
+  const jobs = await fetchJobs(searchParams);
   const departments = (await fetchDepartments()) || [];
   const statuses = (await fetchStatuses()) || [];
   const types = (await fetchTypes()) || [];
