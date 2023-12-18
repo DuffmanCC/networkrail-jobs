@@ -27,7 +27,8 @@ export async function fetchJobs(
     return data.jobs;
   } catch (error) {
     console.error(
-      `❌ Error fetching jobs from /api/${apiVersion}/jobs:", error`
+      `❌ Error fetching jobs from /api/${apiVersion}/jobs:`,
+      error
     );
   }
 }
@@ -44,7 +45,10 @@ export async function fetchJob(id: string, apiVersion = "v2") {
     const data = await res.json();
     return data;
   } catch (error) {
-    console.error(`❌ Error fetching job from /api/v1/${id} :`, error);
+    console.error(
+      `❌ Error fetching job from /api/${apiVersion}/${id}:`,
+      error
+    );
   }
 }
 
