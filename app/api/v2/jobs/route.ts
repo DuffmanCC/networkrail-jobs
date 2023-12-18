@@ -11,7 +11,6 @@ export async function GET(req: Request) {
   const type = searchParams.get("type");
   const from = searchParams.get("from");
   const to = searchParams.get("to");
-  console.log("🚀 ~ file: route.ts:14 ~ GET ~ to:", to);
 
   await dbConnect();
 

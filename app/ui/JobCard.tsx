@@ -7,14 +7,17 @@ import {
   Divider,
 } from "@nextui-org/react";
 import Link from "next/link";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { JobMappedInterface } from "../lib/types";
+import { HeartIcon } from "./Icons";
 
 interface Props {
   job: JobMappedInterface;
 }
 
 export default function JobCard({ job }: Props) {
+  const [isHearted, setIsHearted] = useState(false);
+
   const formatSalary = useCallback((salary: number) => {
     return new Intl.NumberFormat("en-UK", {
       style: "currency",
@@ -50,18 +53,47 @@ export default function JobCard({ job }: Props) {
     },
   ];
 
+  function handleClickHeart() {
+    setIsHearted((prev) => !prev);
+
+    const heartedJobs = JSON.parse(localStorage.getItem("heartedJobs") || "[]");
+
+    if (heartedJobs.includes(job.jobId)) {
+      const index = heartedJobs.indexOf(job.jobId);
+      heartedJobs.splice(index, 1);
+    } else {
+      heartedJobs.push(job.jobId);
+      localStorage.setItem("heartedJobs", JSON.stringify(heartedJobs));
+    }
+  }
+
+  useEffect(() => {
+    const heartedJobs = JSON.parse(localStorage.getItem("heartedJobs") || "[]");
+
+    if (heartedJobs.includes(job.jobId)) {
+      setIsHearted(true);
+    }
+  }, [job.jobId]);
+
   return (
     <Card
       className="job-card hover:scale-101 bg-slate-200 dark:bg-slate-800"
       shadow="none"
       radius="sm"
     >
-      <CardHeader>
+      <CardHeader className="relative pr-8">
         <Link href={`/job/${job.jobId}`} className="">
           <h2 className="line-clamp-1 text-brand-green font-bold underline decoration-current">
             {job.title.split("-")[0]}
           </h2>
         </Link>
+
+        <button onClick={handleClickHeart}>
+          <HeartIcon
+            className="w-6 h-6 text-brand-red absolute right-2 top-3 hover:scale-105"
+            fill={isHearted ? "currentColor" : "none"}
+          />
+        </button>
       </CardHeader>
 
       <Divider />
@@ -79,7 +111,7 @@ export default function JobCard({ job }: Props) {
 
       <CardFooter className="flex justify-between items-end">
         <div className="font-black flex flex-col gap-1 text-sm">
-          <div className="text-brand-red ">Salary range</div>
+          <div className="text-brand-red">Salary range</div>
 
           {!job.salary.min && !job.salary.max ? (
             <div className="text-xs">Not specified</div>

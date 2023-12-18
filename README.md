@@ -22,6 +22,14 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 [/api/v1/jobs](http://localhost:3000/api/v1/jobs)
 
+```
+response json
+{
+    jobsLength: number,
+    jobs: []
+}
+```
+
 [/v1/jobs/cities](http://localhost:3000/api/v1/jobs/cities)
 
 [/v1/jobs/statuses](http://localhost:3000/api/v1/jobs/statuses)
