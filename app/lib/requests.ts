@@ -27,7 +27,7 @@ export async function fetchJobs(
     return data.jobs;
   } catch (error) {
     console.error(
-      `❌ Error fetching jobs from /api/${apiVersion}/jobs:`,
+      `❌ Error fetching jobs from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs:`,
       error
     );
   }
@@ -46,7 +46,7 @@ export async function fetchJob(id: string, apiVersion = "v2") {
     return data;
   } catch (error) {
     console.error(
-      `❌ Error fetching job from /api/${apiVersion}/${id}:`,
+      `❌ Error fetching job from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/${id}:`,
       error
     );
   }
@@ -65,7 +65,7 @@ export async function fetchDepartments(apiVersion = "v2") {
     return data;
   } catch (error) {
     console.error(
-      `❌ Error fetching jobs functions from /api/${apiVersion}/jobs/departments:`,
+      `❌ Error fetching jobs functions from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/departments:`,
       error
     );
   }
@@ -86,7 +86,7 @@ export async function fetchStatuses(apiVersion = "v2") {
     return data;
   } catch (error) {
     console.error(
-      `❌ Error fetching jobs statuses from /api/${apiVersion}/jobs/statuses:`,
+      `❌ Error fetching jobs statuses from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/statuses:`,
       error
     );
   }
@@ -107,7 +107,7 @@ export async function fetchTypes(apiVersion = "v2") {
     return data;
   } catch (error) {
     console.error(
-      `❌ Error fetching jobs contexts from /api/${apiVersion}/jobs/types:`,
+      `❌ Error fetching jobs contexts from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/types:`,
       error
     );
   }
@@ -128,7 +128,7 @@ export async function fetchCities(apiVersion = "v2") {
     return data;
   } catch (error) {
     console.error(
-      `❌ Error fetching jobs cities from /api/${apiVersion}/jobs/cities:`,
+      `❌ Error fetching jobs cities from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/cities:`,
       error
     );
   }
