@@ -10,10 +10,10 @@ import Filters from "./Filters";
 interface Props {
   id: string;
   jobs: any;
-  departments: { value: string; label: string }[];
-  statuses: { value: string; label: string }[];
-  types: { value: string; label: string }[];
-  cities: { value: string; label: string }[];
+  departments: string[];
+  statuses: string[];
+  types: string[];
+  cities: string[];
 }
 
 export default function Sidebar({
@@ -26,8 +26,7 @@ export default function Sidebar({
 }: Props) {
   const showFilters = useStore((state: any) => state.showFilters);
 
-  const { filters, setFilters, isSalaryActive, setIsSalaryActive } =
-    useContext(FilterContext);
+  const { filters, isSalaryActive } = useContext(FilterContext);
 
   const filteredJobs = useMemo(() => {
     return filterJobs(jobs, filters, isSalaryActive);

@@ -1,11 +1,7 @@
 import { FilterProvider } from "./context/filter-context";
-import {
-  fetchCities,
-  fetchDepartments,
-  fetchJobs,
-  fetchStatuses,
-  fetchTypes,
-} from "./lib/requests";
+import { Job } from "./db/models/Job";
+import dbConnect from "./db/mongo";
+import { JobMappedInterface } from "./lib/types";
 import JobsList from "./ui/JobsList";
 import Sidebar from "./ui/Sidebar";
 
@@ -16,19 +12,21 @@ interface Props {
 }
 
 export default async function Home({ searchParams }: Props) {
-  getSelection;
-  const apiVersion = process.env.API_VERSION || "v2";
-  const jobs = await fetchJobs(searchParams, apiVersion);
-  const departments = (await fetchDepartments()) || [];
-  const statuses = (await fetchStatuses()) || [];
-  const types = (await fetchTypes()) || [];
-  const cities = (await fetchCities()) || [];
+  await dbConnect();
+
+  const jobs: JobMappedInterface[] = await Job.find({});
+  const departments = jobs.map((job) => job.department);
+  const statuses = jobs.map((job) => job.status);
+  const types = jobs.map((job) => job.type);
+  const cities = jobs.map((job) => job.location.city);
+
+  const jobsFlat = JSON.parse(JSON.stringify(jobs));
 
   return (
     <FilterProvider>
       <Sidebar
         id="sidebar"
-        jobs={jobs}
+        jobs={jobsFlat}
         departments={departments}
         statuses={statuses}
         types={types}
@@ -36,7 +34,7 @@ export default async function Home({ searchParams }: Props) {
       />
 
       <main className="overflow-y-auto">
-        <JobsList jobs={jobs} />
+        <JobsList jobs={jobsFlat} />
       </main>
     </FilterProvider>
   );
