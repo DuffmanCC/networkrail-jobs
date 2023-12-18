@@ -16,7 +16,8 @@ interface Props {
 }
 
 export default async function Home({ searchParams }: Props) {
-  const apiVersion = process.env.API_VERSION;
+  getSelection;
+  const apiVersion = process.env.API_VERSION || "v2";
   const jobs = await fetchJobs(searchParams, apiVersion);
   const departments = (await fetchDepartments()) || [];
   const statuses = (await fetchStatuses()) || [];
