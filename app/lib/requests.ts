@@ -19,14 +19,16 @@ export async function fetchJobs(
 ) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}api/${apiVersion}/jobs`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs`
     );
 
     const data = await res.json();
 
     return data.jobs;
   } catch (error) {
-    console.error("❌ Error fetching jobs from /api/v1/jobs:", error);
+    console.error(
+      `❌ Error fetching jobs from /api/${apiVersion}/jobs:", error`
+    );
   }
 }
 
