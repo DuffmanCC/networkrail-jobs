@@ -71,6 +71,7 @@ export async function GET(req: Request) {
       jobs: filteredJobs,
     });
   } catch (error) {
+    console.error("❌ Error fetching jobs:", error);
     return Response.json({ error: "error from the server" });
   }
 }
