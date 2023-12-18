@@ -17,7 +17,11 @@ export async function GET(req: Request) {
   try {
     const jobs: JobMappedInterface[] = await Job.find({});
 
-    let filteredJobs = jobs;
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    let filteredJobs = jobs.filter((job) => job.dates.end >= yesterday);
 
     if (city) {
       filteredJobs = filteredJobs.filter((job) => job.location.city === city);
@@ -64,7 +68,7 @@ export async function GET(req: Request) {
         from,
         to,
       },
-      data: filteredJobs,
+      jobs: filteredJobs,
     });
   } catch (error) {
     return Response.json({ error: "error from the server" });

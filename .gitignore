@@ -13,6 +13,10 @@
 /.next/
 /out/
 
+# scraping
+/scraping/description
+/scraping/json-from-oracle
+
 # production
 /build
 

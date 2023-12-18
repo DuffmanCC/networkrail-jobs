@@ -13,9 +13,14 @@ export async function fetchDataFromNetworRail() {
   return data.career;
 }
 
-export async function fetchJobs(searchParams: { [key: string]: string }) {
+export async function fetchJobs(
+  searchParams: { [key: string]: string },
+  apiVersion = "v1"
+) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/v1/jobs`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}api/${apiVersion}/jobs`
+    );
 
     const data = await res.json();
 
