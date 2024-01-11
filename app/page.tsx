@@ -5,20 +5,26 @@ import { JobMappedInterface } from "./lib/types";
 import JobsList from "./ui/JobsList";
 import Sidebar from "./ui/Sidebar";
 
-interface Props {
-  searchParams: {
-    [key: string]: string;
-  };
-}
+// interface Props {
+//   searchParams: {
+//     [key: string]: string;
+//   };
+// }
 
-export default async function Home({ searchParams }: Props) {
+export default async function Home() {
   await dbConnect();
 
-  const jobs: JobMappedInterface[] = await Job.find({});
+  const jobs: JobMappedInterface[] = await Job.find({
+    "dates.end": { $gte: new Date() },
+  });
   const departments = jobs.map((job) => job.department);
+  const departmentesUnique = [...new Set(departments)];
   const statuses = jobs.map((job) => job.status);
+  const statusesUnique = [...new Set(statuses)];
   const types = jobs.map((job) => job.type);
+  const typesUnique = [...new Set(types)];
   const cities = jobs.map((job) => job.location.city);
+  const citiesUnique = [...new Set(cities)];
 
   const jobsFlat = JSON.parse(JSON.stringify(jobs));
 
@@ -27,13 +33,14 @@ export default async function Home({ searchParams }: Props) {
       <Sidebar
         id="sidebar"
         jobs={jobsFlat}
-        departments={departments}
-        statuses={statuses}
-        types={types}
-        cities={cities}
+        departments={departmentesUnique}
+        statuses={statusesUnique}
+        types={typesUnique}
+        cities={citiesUnique}
       />
 
       <main className="overflow-y-auto">
+        <h1 className="sr-only">Home</h1>
         <JobsList jobs={jobsFlat} />
       </main>
     </FilterProvider>
