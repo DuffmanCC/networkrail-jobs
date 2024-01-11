@@ -59,7 +59,7 @@ export default function SingleJobMeta({ meta }: Props) {
       value:
         meta.salary.min && meta.salary.max ? (
           <>
-            ${formatCurrency(meta.salary.min)} - $
+            {formatCurrency(meta.salary.min)} - $
             {formatCurrency(meta.salary.max)}
           </>
         ) : (

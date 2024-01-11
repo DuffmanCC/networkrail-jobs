@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useCallback } from "react";
 import { JobMappedInterface } from "../lib/types";
 import SingleJobMeta from "./SingleJobMeta";
 
@@ -8,16 +7,6 @@ interface Props {
 }
 
 export default function SingleJob({ job }: Props) {
-  const formatSalary = useCallback((salary: string) => {
-    const number = parseInt(salary);
-
-    return new Intl.NumberFormat("en-UK", {
-      style: "currency",
-      maximumFractionDigits: 0,
-      currency: "GBP",
-    }).format(number);
-  }, []);
-
   const jobMeta = {
     location: {
       city: job.location.city,
