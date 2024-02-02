@@ -20,20 +20,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Network Rail jobs API
 
-[/api/v1/jobs](http://localhost:3000/api/v1/jobs)
+[/api/v2/jobs](http://localhost:3000/api/v2/jobs)
 
-```
-response json
-{
-    jobsLength: number,
-    jobs: []
-}
-```
+[/api/v2/jobs/cities](http://localhost:3000/api/v2/jobs/cities)
 
-[/v1/jobs/cities](http://localhost:3000/api/v1/jobs/cities)
+[/api/v2/jobs/statuses](http://localhost:3000/api/v2/jobs/statuses)
 
-[/v1/jobs/statuses](http://localhost:3000/api/v1/jobs/statuses)
+[/api/v2/jobs/types](http://localhost:3000/api/v2/jobs/types)
 
-[/v1/jobs/types](http://localhost:3000/api/v1/jobs/types)
-
-[/v1/jobs/departmets](http://localhost:3000/api/v1/jobs/departments)
+[/api/v2/jobs/departmets](http://localhost:3000/api/v2/jobs/departments)
