@@ -61,3 +61,21 @@ export interface FilterProps {
   types: Options;
   cities: Options;
 }
+
+export interface JobMeta {
+  location: {
+    city: string;
+    postcode: string;
+  };
+  department: string;
+  status: string;
+  type: string;
+  salary: {
+    min: number | null;
+    max: number | null;
+  };
+  dates: {
+    start: Date | string;
+    end: Date | string;
+  };
+}
