@@ -13,7 +13,7 @@ export async function POST(req: Request) {
 
     return Response.json(result);
   } catch (error) {
-    return Response.json({ error: "error from the server" });
+    return Response.json({ error: "error from the server" }, { status: 500 });
   }
 }
 

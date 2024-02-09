@@ -11,11 +11,16 @@ export async function GET(
     const job = await Job.find({ jobId: params.id });
 
     if (job.length === 0) {
-      return Response.json({ error: `Job ${params.id} not found` });
+      return Response.json(
+        { error: `Job ${params.id} not found` },
+        {
+          status: 404,
+        }
+      );
     }
 
     return Response.json({ success: true, job: job[0] });
   } catch (error) {
-    return Response.json({ error: "error from the server" });
+    return Response.json({ error: "error from the server" }, { status: 500 });
   }
 }
