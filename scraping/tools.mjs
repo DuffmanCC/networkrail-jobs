@@ -1,4 +1,5 @@
 import * as cheerio from "cheerio";
+import { Schema, model } from "mongoose";
 
 export async function fetchDataFromNetworRail() {
   const response = await fetch(
@@ -120,3 +121,57 @@ export async function mapJob(getDescriptionFromOracle, job) {
     applyLink: `https://iebsprodnwrl.opc.oracleoutsourcing.com/OA_HTML/OA.jsp?OAFunc=IRC_VIS_VAC_DISPLAY&p_svid=${job.VACANCY_ID}&p_spid=0`,
   };
 }
+
+export async function saveJobToMongoDb(job) {
+  const url = `http://localhost:3000/api/v2/job`;
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(job),
+  };
+
+  fetch(url, requestOptions)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json(); // Parse the response as JSON
+    })
+    .then((data) => {})
+    .catch((error) => {
+      // Handle errors that occurred during the request
+      console.error("There was a problem with the request:", error);
+    });
+}
+
+export async function jobExistsInDb(jobModel, jobId) {
+  // Check if a job with the same unique identifier already exists
+  const existingJob = await jobModel.findOne({ id: jobId });
+
+  return Boolean(existingJob);
+}
+
+export const jobSchema = new Schema({
+  jobId: String,
+  title: String,
+  location: {
+    city: String,
+    postcode: String,
+    lat: Number,
+    lng: Number,
+  },
+  salary: {
+    min: Number,
+    max: Number,
+  },
+  description: String,
+  department: String,
+  dates: {
+    start: Date,
+    end: Date,
+  },
+  status: String,
+  type: String,
+});
+
+export const JobModel = model("Job", jobSchema);
