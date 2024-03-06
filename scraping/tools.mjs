@@ -64,6 +64,19 @@ export async function fetchDataFromNetworRail() {
   return data.career;
 }
 
+export function innerJoin(arr1, arr2, key) {
+  const stack = [];
+
+  for (let i = 0; i < arr1.length; i++) {
+    const obj2 = arr2.find((el) => el[key] === arr1[i][key]);
+    const result = { ...arr1[i], ...obj2 };
+
+    stack.push(result);
+  }
+
+  return stack;
+}
+
 export async function fetchData(url) {
   console.log("🤟 Scraping data...");
 
@@ -82,7 +95,7 @@ export async function fetchData(url) {
   return { data: text };
 }
 
-export async function getHtmlFromOracle(url) {
+export async function getHtmlFromOracle(fetchData, url) {
   let res = await fetchData(url);
 
   if (!res.data) {
@@ -125,20 +138,11 @@ export async function formatContent(string) {
   return dataObj["line-9"];
 }
 
-export function innerJoin(arr1, arr2, key) {
-  const stack = [];
-
-  for (let i = 0; i < arr1.length; i++) {
-    const obj2 = arr2.find((el) => el[key] === arr1[i][key]);
-    const result = { ...arr1[i], ...obj2 };
-
-    stack.push(result);
-  }
-
-  return stack;
-}
-
-export async function getDescriptionFromOracle(job) {
+export async function getDescriptionFromOracle(
+  getHtmlFromOracle,
+  formatContent,
+  job
+) {
   const url = `https://iebsprodnwrl.opc.oracleoutsourcing.com/OA_HTML/OA.jsp?OAFunc=IRC_VIS_VAC_DISPLAY&p_svid=${job.VACANCY_ID}&p_spid=0`;
   // fetch to oracle page
   let string = "";
@@ -156,7 +160,7 @@ export async function getDescriptionFromOracle(job) {
   }
 }
 
-export async function mappJob2(job) {
+export async function parseJob(getDescriptionFromOracle, job) {
   const description = await getDescriptionFromOracle(job);
 
   return {
