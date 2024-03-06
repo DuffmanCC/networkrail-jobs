@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import mongoose, { Schema, model } from "mongoose";
-import { fetchDataFromNetworRail, parseJob } from "./tools.mjs";
+import { fetchDataFromNetworRail, mapJob } from "./tools.mjs";
 dotenv.config({ path: ".env.local" });
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -85,7 +85,7 @@ async function init() {
         if (exists) {
           return "Job already exists";
         } else {
-          const mappedJob = parseJob(getDescriptionFromOracle, job);
+          const mappedJob = mapJob(getDescriptionFromOracle, job);
           return saveJobToMongoDb(mappedJob);
         }
       })
@@ -98,6 +98,8 @@ async function init() {
       "❌ An unexpected error occurred while saving jobs to MongoDB:",
       error
     );
+  } finally {
+    process.exit(0);
   }
 }
 

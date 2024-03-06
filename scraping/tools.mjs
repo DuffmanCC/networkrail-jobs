@@ -1,55 +1,4 @@
 import * as cheerio from "cheerio";
-import { promises as fs } from "fs";
-import path from "path";
-
-export function getJobLink(job) {
-  return `https://iebsprodnwrl.opc.oracleoutsourcing.com/OA_HTML/OA.jsp?OAFunc=IRC_VIS_VAC_DISPLAY&p_svid=${job.VACANCY_ID}&p_spid=0`;
-}
-
-export function fixContent(string) {
-  return JSON.parse(string.replace(/’/g, "'"));
-}
-
-export async function mapJob(job) {
-  const filePath = path.join(
-    process.cwd(),
-    "scraping",
-    "description",
-    `${job.VACANCY_ID}.json`
-  );
-  // get description from file
-
-  let description = "";
-  try {
-    description = await fs.readFile(filePath, "utf8");
-  } catch (error) {
-    console.log("❌ Error occurred while reading file here", error);
-    description = "";
-  }
-
-  const result = {
-    jobId: job.VACANCY_ID,
-    title: job.DISPLAYED_JOB_TITLE,
-    location: {
-      city: job.TOWN_OR_CITY,
-      postcode: job.POSTAL_CODE,
-      lat: job.LATITUDE,
-      lng: job.LONGITUDE,
-    },
-    salary: { min: parseInt(job.MIN_SALARY), max: parseInt(job.MAX_SALARY) },
-    description: fixContent(description),
-    department: job.FUNCTION,
-    dates: {
-      start: job.VAC_ADVERTISE_START_DATE,
-      end: job.VAC_ADVERTISE_END_DATE,
-    },
-    status: job.EMPLOYEEMENT_STATUS,
-    type: job.VACANCY_CONTEXT,
-    applyLink: `https://iebsprodnwrl.opc.oracleoutsourcing.com/OA_HTML/OA.jsp?OAFunc=IRC_VIS_VAC_DISPLAY&p_svid=${job.VACANCY_ID}&p_spid=${job.POSTING_CONTENT_ID}&refsh=0`,
-  };
-
-  return result;
-}
 
 export async function fetchDataFromNetworRail() {
   const response = await fetch(
@@ -62,19 +11,6 @@ export async function fetchDataFromNetworRail() {
 
   const data = await response.json();
   return data.career;
-}
-
-export function innerJoin(arr1, arr2, key) {
-  const stack = [];
-
-  for (let i = 0; i < arr1.length; i++) {
-    const obj2 = arr2.find((el) => el[key] === arr1[i][key]);
-    const result = { ...arr1[i], ...obj2 };
-
-    stack.push(result);
-  }
-
-  return stack;
 }
 
 export async function fetchData(url) {
@@ -160,7 +96,7 @@ export async function getDescriptionFromOracle(
   }
 }
 
-export async function parseJob(getDescriptionFromOracle, job) {
+export async function mapJob(getDescriptionFromOracle, job) {
   const description = await getDescriptionFromOracle(job);
 
   return {
