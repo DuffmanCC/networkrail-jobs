@@ -30,21 +30,26 @@ mongoose.connection.on("error", (err) => {
 async function init() {
   try {
     const jobs = await fetchDataFromNetworRail();
+    let newJobs = 0;
 
-    const results = await Promise.all(
+    await Promise.all(
       jobs.map(async (job) => {
         const exists = await jobExistsInDb(JobModel, job.id);
+
         if (exists) {
-          return "Job already exists";
-        } else {
-          const mappedJob = mapJob(getDescriptionFromOracle, job);
-          return saveJobToMongoDb(mappedJob);
+          console.log(`ℹ️ Job ${job.id} already exists`);
+          return false;
+        }
+
+        const mappedJob = mapJob(getDescriptionFromOracle, job);
+        const savedJob = saveJobToMongoDb(mappedJob);
+        if (savedJob) {
+          newJobs++;
         }
       })
     );
 
-    const newJobs = results.filter((result) => result !== "Job already exists");
-    console.log(`✅ ${newJobs.length} new jobs saved to MongoDB`);
+    console.log(`✅ ${newJobs} new jobs saved to MongoDB`);
   } catch (error) {
     console.error(
       "❌ An unexpected error occurred while saving jobs to MongoDB:",
