@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import {
   JobModel,
   fetchDataFromNetworRail,
+  formatContent,
+  getHtmlFromOracle,
   jobExistsInDb,
   mapJob,
   saveJobToMongoDb,
@@ -34,15 +36,16 @@ async function init() {
 
     await Promise.all(
       jobs.map(async (job) => {
-        const exists = await jobExistsInDb(JobModel, job.id);
+        const exists = await jobExistsInDb(JobModel, job.VACANCY_ID);
 
         if (exists) {
           console.log(`ℹ️ Job ${job.id} already exists`);
           return false;
         }
 
-        const mappedJob = mapJob(getDescriptionFromOracle, job);
-        const savedJob = saveJobToMongoDb(mappedJob);
+        const mappedJob = await mapJob(getHtmlFromOracle, formatContent, job);
+        const savedJob = await saveJobToMongoDb(JobModel, mappedJob);
+
         if (savedJob) {
           newJobs++;
         }

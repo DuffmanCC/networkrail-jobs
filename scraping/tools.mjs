@@ -97,8 +97,15 @@ export async function getDescriptionFromOracle(
   }
 }
 
-export async function mapJob(getDescriptionFromOracle, job) {
-  const description = await getDescriptionFromOracle(job);
+export async function mapJob(getHtmlFromOracle, formatContent, job) {
+  const description = await getDescriptionFromOracle(
+    getHtmlFromOracle,
+    formatContent,
+    job
+  );
+
+  const minSalary = parseInt(job.MIN_SALARY);
+  const maxSalary = parseInt(job.MAX_SALARY);
 
   return {
     jobId: job.VACANCY_ID,
@@ -109,7 +116,10 @@ export async function mapJob(getDescriptionFromOracle, job) {
       lat: job.LATITUDE,
       lng: job.LONGITUDE,
     },
-    salary: { min: parseInt(job.MIN_SALARY), max: parseInt(job.MAX_SALARY) },
+    salary: {
+      min: isNaN(minSalary) ? undefined : minSalary,
+      max: isNaN(maxSalary) ? undefined : maxSalary,
+    },
     description: description,
     department: job.FUNCTION,
     dates: {
@@ -122,31 +132,22 @@ export async function mapJob(getDescriptionFromOracle, job) {
   };
 }
 
-export async function saveJobToMongoDb(job) {
-  const url = `http://localhost:3000/api/v2/job`;
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(job),
-  };
+export async function saveJobToMongoDb(JobModel, job) {
+  try {
+    const jobDocument = new JobModel(job); // Create a new Mongoose document from the job object
+    const result = await jobDocument.save(); // Save the document to MongoDB
 
-  fetch(url, requestOptions)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json(); // Parse the response as JSON
-    })
-    .then((data) => {})
-    .catch((error) => {
-      // Handle errors that occurred during the request
-      console.error("There was a problem with the request:", error);
-    });
+    console.log(`Job was inserted with _id: ${result._id}`);
+    return result;
+  } catch (error) {
+    console.error("There was a problem with the request:", error);
+    return null;
+  }
 }
 
 export async function jobExistsInDb(jobModel, jobId) {
   // Check if a job with the same unique identifier already exists
-  const existingJob = await jobModel.findOne({ id: jobId });
+  const existingJob = await jobModel.findOne({ jobId: jobId });
 
   return Boolean(existingJob);
 }
