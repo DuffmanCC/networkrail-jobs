@@ -10,10 +10,6 @@ interface Props {
 export default async function Job({ params }: Props) {
   const job = await fetchJob(params.id);
 
-  if (!job.success) {
-    return;
-  }
-
   return (
     <div
       className="flex justify-center items-start md:items-center pr-2 overflow-y-auto relative z-50"

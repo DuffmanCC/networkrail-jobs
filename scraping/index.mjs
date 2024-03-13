@@ -3,8 +3,6 @@ import mongoose from "mongoose";
 import {
   JobModel,
   fetchDataFromNetworRail,
-  formatContent,
-  getHtmlFromOracle,
   jobExistsInDb,
   mapJob,
   saveJobToMongoDb,
@@ -43,7 +41,7 @@ async function init() {
           return false;
         }
 
-        const mappedJob = await mapJob(getHtmlFromOracle, formatContent, job);
+        const mappedJob = await mapJob(job);
         const savedJob = await saveJobToMongoDb(JobModel, mappedJob);
 
         if (savedJob) {

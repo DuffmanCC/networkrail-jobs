@@ -32,7 +32,7 @@ export async function fetchData(url) {
   return { data: text };
 }
 
-export async function getHtmlFromOracle(fetchData, url) {
+export async function getHtmlFromOracle(url) {
   let res = await fetchData(url);
 
   if (!res.data) {
@@ -75,11 +75,7 @@ export async function formatContent(string) {
   return dataObj["line-9"];
 }
 
-export async function getDescriptionFromOracle(
-  getHtmlFromOracle,
-  formatContent,
-  job
-) {
+export async function getDescriptionFromOracle(job) {
   const url = `https://iebsprodnwrl.opc.oracleoutsourcing.com/OA_HTML/OA.jsp?OAFunc=IRC_VIS_VAC_DISPLAY&p_svid=${job.VACANCY_ID}&p_spid=0`;
   // fetch to oracle page
   let string = "";
@@ -97,15 +93,13 @@ export async function getDescriptionFromOracle(
   }
 }
 
-export async function mapJob(getHtmlFromOracle, formatContent, job) {
-  const description = await getDescriptionFromOracle(
-    getHtmlFromOracle,
-    formatContent,
-    job
-  );
+export async function mapJob(job) {
+  const description = await getDescriptionFromOracle(job);
 
   const minSalary = parseInt(job.MIN_SALARY);
   const maxSalary = parseInt(job.MAX_SALARY);
+
+  const applyLink = `https://iebsprodnwrl.opc.oracleoutsourcing.com/OA_HTML/OA.jsp?OAFunc=IRC_VIS_VAC_DISPLAY&p_svid=${job.VACANCY_ID}&p_spid=0`;
 
   return {
     jobId: job.VACANCY_ID,
@@ -117,8 +111,8 @@ export async function mapJob(getHtmlFromOracle, formatContent, job) {
       lng: job.LONGITUDE,
     },
     salary: {
-      min: isNaN(minSalary) ? undefined : minSalary,
-      max: isNaN(maxSalary) ? undefined : maxSalary,
+      min: isNaN(minSalary) ? null : minSalary,
+      max: isNaN(maxSalary) ? null : maxSalary,
     },
     description: description,
     department: job.FUNCTION,
@@ -128,7 +122,7 @@ export async function mapJob(getHtmlFromOracle, formatContent, job) {
     },
     status: job.EMPLOYEEMENT_STATUS,
     type: job.VACANCY_CONTEXT,
-    applyLink: `https://iebsprodnwrl.opc.oracleoutsourcing.com/OA_HTML/OA.jsp?OAFunc=IRC_VIS_VAC_DISPLAY&p_svid=${job.VACANCY_ID}&p_spid=0`,
+    applyLink: applyLink,
   };
 }
 
@@ -173,6 +167,7 @@ export const jobSchema = new Schema({
   },
   status: String,
   type: String,
+  applyLink: String,
 });
 
 export const JobModel = model("Job", jobSchema);
