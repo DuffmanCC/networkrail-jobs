@@ -7,6 +7,7 @@ import {
   mapJob,
   saveJobToMongoDb,
 } from "./tools.mjs";
+
 dotenv.config({ path: ".env.local" });
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -17,17 +18,17 @@ if (!MONGODB_URI) {
   );
 }
 
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-mongoose.connection.on("error", (err) => {
-  console.error(`❌ MongoDB connection error: ${err}`);
-  process.exit(-1);
-});
-
 export async function init() {
+  mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
+  mongoose.connection.on("error", (err) => {
+    console.error(`❌ MongoDB connection error: ${err}`);
+    process.exit(-1);
+  });
+
   try {
     const jobs = await fetchDataFromNetworRail();
     let newJobs = 0;
