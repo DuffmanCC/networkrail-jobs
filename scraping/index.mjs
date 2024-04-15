@@ -27,7 +27,7 @@ mongoose.connection.on("error", (err) => {
   process.exit(-1);
 });
 
-async function init() {
+export async function init() {
   try {
     const jobs = await fetchDataFromNetworRail();
     let newJobs = 0;
