@@ -52,14 +52,12 @@ export type FiltersType = {
   salary: number[];
 };
 
-export type Options = array[];
-
 export interface FilterProps {
   jobs: [];
-  departments: Options;
-  statuses: Options;
-  types: Options;
-  cities: Options;
+  departments: string[];
+  statuses: string[];
+  types: string[];
+  cities: string[];
 }
 
 export interface JobMeta {

@@ -1,5 +1,4 @@
 import * as cheerio from "cheerio";
-import { Schema, model } from "mongoose";
 
 export async function fetchDataFromNetworRail() {
   const response = await fetch(
@@ -145,29 +144,3 @@ export async function jobExistsInDb(jobModel, jobId) {
 
   return Boolean(existingJob);
 }
-
-export const jobSchema = new Schema({
-  jobId: String,
-  title: String,
-  location: {
-    city: String,
-    postcode: String,
-    lat: Number,
-    lng: Number,
-  },
-  salary: {
-    min: Number,
-    max: Number,
-  },
-  description: String,
-  department: String,
-  dates: {
-    start: Date,
-    end: Date,
-  },
-  status: String,
-  type: String,
-  applyLink: String,
-});
-
-export const JobModel = model("Job", jobSchema);

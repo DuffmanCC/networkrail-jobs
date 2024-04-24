@@ -1,5 +1,5 @@
-import { JobMappedInterface } from "@/app/lib/types";
 import { Model, Schema, model } from "mongoose";
+import { JobMappedInterface } from "../../lib/types";
 
 let Job: Model<JobMappedInterface>;
 

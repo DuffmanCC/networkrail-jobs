@@ -1,4 +1,4 @@
-import { FilterProps, JobMappedInterface, Options } from "@/app/lib/types";
+import { FilterProps, JobMappedInterface } from "@/app/lib/types";
 import { useContext, useMemo } from "react";
 import { FilterContext } from "../context/filter-context";
 import { filterJobs } from "../lib/tools";
@@ -49,7 +49,7 @@ export default function useFilters({
   }
 
   type SelectFiltersType = {
-    options: Options;
+    options: { label: string; value: string }[];
     label: string;
     filterKey: "status" | "department" | "type" | "city";
   }[];
