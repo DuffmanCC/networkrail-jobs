@@ -56,9 +56,10 @@ export async function init() {
 
     console.log(`✅ ${newJobs} new jobs saved to MongoDB`);
   } catch (error) {
+    const msg = error instanceof Error ? error.message : error;
     console.error(
       "❌ An unexpected error occurred while saving jobs to MongoDB:",
-      error
+      msg
     );
   } finally {
     /**
