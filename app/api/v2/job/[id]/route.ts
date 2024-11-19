@@ -5,9 +5,9 @@ export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  await dbConnect();
-
   try {
+    await dbConnect();
+
     const job = await Job.find({ jobId: params.id });
 
     if (job.length === 0) {
@@ -21,6 +21,7 @@ export async function GET(
 
     return Response.json({ success: true, job: job[0] });
   } catch (error) {
-    return Response.json({ error: "error from the server" }, { status: 500 });
+    const msg = error instanceof Error ? error.message : "An error occurred";
+    return Response.json({ error: msg }, { status: 500 });
   }
 }
