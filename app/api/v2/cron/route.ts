@@ -1,5 +1,5 @@
+import { init } from "@/scraping/index.mjs";
 import { NextResponse } from "next/server";
-import { init } from "../../../../scraping/index.mjs";
 
 export async function GET() {
   await init();
