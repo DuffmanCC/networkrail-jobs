@@ -20,6 +20,7 @@ export interface JobInterface {
 }
 
 export interface JobMappedInterface {
+  _id: string;
   jobId: string;
   title: string;
   location: {

@@ -35,7 +35,7 @@ export default function JobsList({ jobs }: Props) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
       {filteredJobs.map((job: JobMappedInterface) => (
-        <JobCard job={job} key={job.jobId} />
+        <JobCard job={job} key={job._id} />
       ))}
     </div>
   );
