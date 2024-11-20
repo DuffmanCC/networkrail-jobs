@@ -8,8 +8,12 @@ import Sidebar from "./ui/Sidebar";
 export default async function Home() {
   await dbConnect();
 
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
   const jobs: JobMappedInterface[] = await Job.find({
-    "dates.end": { $gte: new Date() },
+    "dates.end": { $gte: yesterday },
   });
 
   const departments = jobs.map((job) => job.department);
