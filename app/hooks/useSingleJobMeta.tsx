@@ -1,5 +1,5 @@
+import { JobMeta } from "@/app/lib/types";
 import { useCallback } from "react";
-import { JobMeta } from "../lib/types";
 
 export default function useSingleJobMeta(meta: JobMeta) {
   const formatDate = useCallback((date: Date | string) => {

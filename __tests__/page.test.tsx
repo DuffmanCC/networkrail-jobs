@@ -1,8 +1,8 @@
+import Home from "@/app/page";
 import Footer from "@/app/ui/Footer";
+import Header from "@/app/ui/Header";
 import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
-import Home from "../app/page";
-import Header from "../app/ui/Header";
 
 test("renders Home page", async () => {
   const home = await Home();

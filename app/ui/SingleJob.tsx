@@ -1,5 +1,5 @@
+import { JobMappedInterface } from "@/app/lib/types";
 import Link from "next/link";
-import { JobMappedInterface } from "../lib/types";
 import SingleJobMeta from "./SingleJobMeta";
 
 interface Props {

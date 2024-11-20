@@ -1,7 +1,7 @@
+import { FilterContext } from "@/app/context/filter-context";
+import { filterJobs } from "@/app/lib/tools";
 import { FilterProps, JobMappedInterface } from "@/app/lib/types";
 import { useContext, useMemo } from "react";
-import { FilterContext } from "../context/filter-context";
-import { filterJobs } from "../lib/tools";
 
 export default function useFilters({
   cities,

@@ -1,5 +1,5 @@
+import { JobMeta } from "@/app/lib/types";
 import useSingleJobMeta from "../hooks/useSingleJobMeta";
-import { JobMeta } from "../lib/types";
 
 interface Props {
   meta: JobMeta;

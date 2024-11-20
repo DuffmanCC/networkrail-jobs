@@ -1,7 +1,7 @@
 "use client";
 
+import { FiltersType } from "@/app/lib/types";
 import { createContext, useState } from "react";
-import { FiltersType } from "../lib/types";
 
 const initialFilters = {
   status: "",

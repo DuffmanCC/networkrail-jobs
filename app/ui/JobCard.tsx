@@ -1,3 +1,5 @@
+import { JobMappedInterface } from "@/app/lib/types";
+import { HeartIcon } from "@/app/ui/Icons";
 import {
   Button,
   Card,
@@ -8,8 +10,6 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { JobMappedInterface } from "../lib/types";
-import { HeartIcon } from "./Icons";
 
 interface Props {
   job: JobMappedInterface;

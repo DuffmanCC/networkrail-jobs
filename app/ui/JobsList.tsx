@@ -1,9 +1,9 @@
 "use client";
 
+import { FilterContext } from "@/app/context/filter-context";
+import { filterJobs } from "@/app/lib/tools";
+import { JobMappedInterface } from "@/app/lib/types";
 import { useContext, useMemo } from "react";
-import { FilterContext } from "../context/filter-context";
-import { filterJobs } from "../lib/tools";
-import { JobMappedInterface } from "../lib/types";
 import JobCard from "./JobCard";
 
 interface Props {
