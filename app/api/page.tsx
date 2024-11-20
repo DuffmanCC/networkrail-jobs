@@ -27,7 +27,7 @@ export default async function Api() {
   ];
   return (
     <>
-      <aside className="p-6 rounded-md bg-slate-200 dark:bg-slate-800 dark:text-white">
+      <aside className="p-6 rounded-md bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-white">
         <h1 className="text-2xl font-bold mb-6">API Specs</h1>
 
         <nav>
@@ -41,7 +41,7 @@ export default async function Api() {
         </nav>
       </aside>
 
-      <main className="overflow-y-auto rounded-md bg-slate-200 dark:bg-slate-800 dark:text-white ">
+      <main className="overflow-y-auto rounded-md bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-white">
         <div className="p-8">
           <section id="get-jobs" className="mb-10">
             <h2 className="text-xl font-bold mb-4">Get Jobs</h2>
