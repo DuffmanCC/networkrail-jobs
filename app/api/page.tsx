@@ -27,11 +27,11 @@ export default async function Api() {
   ];
   return (
     <>
-      <aside className="p-6 rounded-md bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-white">
-        <h1 className="text-2xl font-bold mb-6">API Specs</h1>
+      <aside className="px-6 py-2 md:p-6 rounded-md bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-white hidden sm:block">
+        <h1 className="text-2xl font-bold mb-2 md:mb-6">API Specs</h1>
 
         <nav>
-          <ul className="space-y-4">
+          <ul className="flex flex-col gap-1">
             {menu.map((item) => (
               <li key={item.slug}>
                 <a href={`#${item.slug}`}>{item.title}</a>
@@ -41,7 +41,7 @@ export default async function Api() {
         </nav>
       </aside>
 
-      <main className="overflow-y-auto rounded-md bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-white">
+      <main className="overflow-y-auto rounded-md bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-white scroll-smooth">
         <div className="p-8">
           <section id="get-jobs" className="mb-10">
             <h2 className="text-xl font-bold mb-4">Get Jobs</h2>

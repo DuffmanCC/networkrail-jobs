@@ -53,13 +53,4 @@ body {
   .grid-cols-body {
     grid-template-columns: 100%;
   }
-
-  #sidebar,
-  main {
-    grid-row: 2 / 3;
-  }
-
-  #footer {
-    grid-row: 3 / 4;
-  }
 }

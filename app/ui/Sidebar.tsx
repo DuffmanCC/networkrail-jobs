@@ -43,7 +43,7 @@ export default function Sidebar({
     <Card
       id={id}
       className={[
-        !showFilters ? "hidden " : "",
+        !showFilters ? "hidden sm:block" : "block",
         "bg-slate-200 dark:bg-slate-800",
       ].join(" ")}
       radius="sm"

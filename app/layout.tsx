@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="text-foreground bg-background scroll-smooth">
+    <html lang="en" className="text-foreground bg-background">
       <body
         className={[
           "antialiased p-2 relative",
