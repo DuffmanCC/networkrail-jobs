@@ -1,6 +1,15 @@
 import { Job } from "@/app/db/models/Job";
 import dbConnect from "@/app/db/mongo";
 import { JobMappedInterface } from "@/app/lib/types";
+import { NextResponse } from "next/server";
+
+type JobQuery = {
+  "dates.end"?: { $gte?: Date; $lte?: Date };
+  "location.city"?: string;
+  department?: string;
+  status?: string;
+  type?: string;
+};
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -15,51 +24,47 @@ export async function GET(req: Request) {
   await dbConnect();
 
   try {
-    const jobs: JobMappedInterface[] = await Job.find({});
-
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
 
-    let filteredJobs = jobs.filter((job) => job.dates.end >= yesterday);
+    const query: JobQuery = {
+      "dates.end": { $gte: yesterday },
+    };
 
     if (city) {
-      filteredJobs = filteredJobs.filter((job) => job.location.city === city);
+      query["location.city"] = city;
     }
 
     if (department) {
-      filteredJobs = filteredJobs.filter(
-        (job) => job.department === department
-      );
+      query.department = department;
     }
 
     if (status) {
-      filteredJobs = filteredJobs.filter((job) => job.status === status);
+      query.status = status;
     }
 
     if (type) {
-      filteredJobs = filteredJobs.filter((job) => job.type === type);
+      query.type = type;
     }
 
     if (from) {
       const [day, month, year] = from.split("-");
-
       const fromDate = new Date(`${year}-${month}-${day}`);
-
-      filteredJobs = filteredJobs.filter((job) => job.dates.start >= fromDate);
+      query["dates.end"] = { ...query["dates.end"], $gte: fromDate };
     }
 
     if (to) {
       const [day, month, year] = to.split("-");
-
       const toDate = new Date(`${year}-${month}-${day}`);
-
-      filteredJobs = filteredJobs.filter((job) => job.dates.end <= toDate);
+      query["dates.end"] = { ...query["dates.end"], $lte: toDate };
     }
 
-    return Response.json({
+    const jobs: JobMappedInterface[] = await Job.find(query);
+
+    return NextResponse.json({
       success: true,
-      jobsCount: filteredJobs.length,
+      jobsCount: jobs.length,
       filterBy: {
         city,
         department,
@@ -68,10 +73,10 @@ export async function GET(req: Request) {
         from,
         to,
       },
-      jobs: filteredJobs,
+      jobs,
     });
   } catch (error) {
-    console.error("❌ Error fetching jobs:", error);
-    return Response.json({ error: "error from the server" });
+    const msg = error instanceof Error ? error.message : error;
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
