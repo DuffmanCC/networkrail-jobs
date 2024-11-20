@@ -35,10 +35,6 @@ export default function Header() {
                 <HomeIcon className="w-6 h-6 text-gray-400" />
               </Link>
 
-              <Link href="/api" aria-label="home" className="hover:scale-105">
-                <ApiIcon className="w-6 h-6 text-gray-400" />
-              </Link>
-
               <button
                 onClick={handleToggleFilters}
                 aria-label="filter toggle button"
@@ -49,6 +45,10 @@ export default function Header() {
             </div>
 
             <div className="flex gap-2">
+              <Link href="/api" aria-label="home" className="hover:scale-105">
+                <ApiIcon className="w-6 h-6 text-gray-400" />
+              </Link>
+
               <Link
                 href="https://github.com/DuffmanCC/networkrail-jobs"
                 aria-label="https://github.com/DuffmanCC/networkrail-jobs"
