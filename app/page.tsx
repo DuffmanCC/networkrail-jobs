@@ -1,9 +1,9 @@
+import { Job } from "@/app/db/models/Job";
+import dbConnect from "@/app/db/mongo";
+import JobsList from "@/app/ui/JobsList";
+import Sidebar from "@/app/ui/Sidebar";
 import { FilterProvider } from "./context/filter-context";
-import { Job } from "./db/models/Job";
-import dbConnect from "./db/mongo";
 import { JobMappedInterface } from "./lib/types";
-import JobsList from "./ui/JobsList";
-import Sidebar from "./ui/Sidebar";
 
 export default async function Home() {
   await dbConnect();

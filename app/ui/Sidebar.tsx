@@ -1,11 +1,11 @@
 "use client";
 
+import { FilterContext } from "@/app/context/filter-context";
+import { filterJobs } from "@/app/lib/tools";
+import useStore from "@/app/store";
+import Filters from "@/app/ui/Filters";
 import { Card } from "@nextui-org/react";
 import { useContext, useMemo } from "react";
-import { FilterContext } from "../context/filter-context";
-import { filterJobs } from "../lib/tools";
-import useStore from "../store";
-import Filters from "./Filters";
 
 interface Props {
   id: string;

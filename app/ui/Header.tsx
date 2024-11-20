@@ -4,7 +4,14 @@ import useHeader from "@/app/hooks/useHeader";
 import { Button, Card, Link, Switch } from "@nextui-org/react";
 import Image from "next/image";
 
-import { FilterIcon, GitHubIcon, HomeIcon, MoonIcon, SunIcon } from "./Icons";
+import {
+  ApiIcon,
+  FilterIcon,
+  GitHubIcon,
+  HomeIcon,
+  MoonIcon,
+  SunIcon,
+} from "./Icons";
 
 export default function Header() {
   const {
@@ -26,6 +33,10 @@ export default function Header() {
             <div className="flex gap-2">
               <Link href="/" aria-label="home" className="hover:scale-105">
                 <HomeIcon className="w-6 h-6 text-gray-400" />
+              </Link>
+
+              <Link href="/api" aria-label="home" className="hover:scale-105">
+                <ApiIcon className="w-6 h-6 text-gray-400" />
               </Link>
 
               <button

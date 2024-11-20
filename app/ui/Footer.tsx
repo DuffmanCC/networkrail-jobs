@@ -1,7 +1,7 @@
 "use client";
 
+import useStore from "@/app/store";
 import { Card } from "@nextui-org/react";
-import useStore from "../store";
 
 export default function Footer() {
   const showFilters = useStore((state: any) => state.showFilters);
