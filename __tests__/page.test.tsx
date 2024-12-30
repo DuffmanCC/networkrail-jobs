@@ -11,15 +11,18 @@ test("renders Home page", async () => {
   expect(screen.getByRole("heading", { level: 1, name: "Home" })).toBeDefined();
 });
 
-test("renders Header component", () => {
+test("renders Header component", async () => {
   render(<Header />);
-  expect(screen.findByLabelText("home")).toBeDefined();
+  const home = await screen.findByText(/home/i);
+  expect(home).toBeDefined();
   expect(
-    screen.findByLabelText("https://github.com/DuffmanCC/networkrail-jobs")
+    await screen.findByLabelText(
+      "https://github.com/DuffmanCC/networkrail-jobs"
+    )
   ).toBeDefined();
 });
 
-test("renders Footer component", () => {
+test("renders Footer component", async () => {
   render(<Footer />);
-  expect(screen.findAllByText("Made with ❤️ by DuffmanCC")).toBeDefined();
+  expect(await screen.findAllByText("Made with ❤️ by DuffmanCC")).toBeDefined();
 });
