@@ -7,7 +7,7 @@ import {
   saveJobToMongoDb,
 } from "./tools.mjs";
 
-import { Job } from "@/app/db/models/Job.js";
+import { Job } from "../app/db/models/Job.js";
 
 dotenv.config({ path: ".env.local" });
 
