@@ -20,17 +20,29 @@ if (!MONGODB_URI) {
 }
 
 export async function init() {
-  mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
-  mongoose.connection.on("error", (err) => {
-    console.error(`❌ MongoDB connection error: ${err}`);
-    process.exit(-1);
-  });
-
   try {
+    if (mongoose.connection.readyState === 0) {
+      console.log("Connecting to MongoDB...");
+      await mongoose.connect(MONGODB_URI);
+      console.log("✅ Connected to MongoDB");
+    }
+
+    if (mongoose.connection.readyState === 2) {
+      console.log("Waiting for MongoDB connection to complete...");
+
+      // Wait until the connection is complete, or add a timeout if it doesn't connect in a reasonable time
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          reject(new Error("MongoDB connection timeout"));
+        }, 30000);
+
+        mongoose.connection.once("connected", () => {
+          clearTimeout(timeout);
+          resolve();
+        });
+      });
+    }
+
     const jobs = await fetchDataFromNetworRail();
     let newJobs = 0;
 
@@ -39,7 +51,7 @@ export async function init() {
         const exists = await jobExistsInDb(Job, job.VACANCY_ID);
 
         if (exists) {
-          console.log(`ℹ️ Job ${job.VACANCY_ID} already exists`);
+          // console.log(`ℹ️ Job ${job.VACANCY_ID} already exists`);
           return false;
         }
 
@@ -62,17 +74,9 @@ export async function init() {
       msg
     );
   } finally {
-    /**
-     * An unexpected error occurred while saving jobs to MongoDB: MongoExpiredSessionError:
-     * Cannot use a session that has ended at applySession
-     *
-     * The error you're seeing above is likely due to the asynchronous
-     * nature of your code. The mongoose.disconnect() in the finally
-     * block might be executing before all the promises inside the Promise.all have resolved.
-     * Use Promise.allSettled instead of Promise.all to ensure that the finally block
-     * is executed after all promises have resolved or rejected.
-     */
-    await mongoose.disconnect();
+    setTimeout(() => {
+      mongoose.disconnect();
+    }, 10000);
   }
 }
 

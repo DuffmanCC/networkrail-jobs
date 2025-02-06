@@ -1,29 +1,20 @@
-import { Job } from "@/app/db/models/Job";
-import dbConnect from "@/app/db/mongo";
 import JobsList from "@/app/ui/JobsList";
 import Sidebar from "@/app/ui/Sidebar";
 import { FilterProvider } from "./context/filter-context";
-import { JobMappedInterface } from "./lib/types";
+import {
+  fetchCities,
+  fetchDepartments,
+  fetchJobs,
+  fetchStatuses,
+  fetchTypes,
+} from "./lib/requests";
 
 export default async function Home() {
-  await dbConnect();
-
-  const today = new Date();
-  const yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
-
-  const jobs: JobMappedInterface[] = await Job.find({
-    "dates.end": { $gte: yesterday },
-  });
-
-  const departments = jobs.map((job) => job.department);
-  const departmentesUnique = [...new Set(departments)];
-  const statuses = jobs.map((job) => job.status);
-  const statusesUnique = [...new Set(statuses)];
-  const types = jobs.map((job) => job.type);
-  const typesUnique = [...new Set(types)];
-  const cities = jobs.map((job) => job.location.city);
-  const citiesUnique = [...new Set(cities)];
+  const jobs = await fetchJobs({});
+  const departments = await fetchDepartments();
+  const statuses = await fetchStatuses();
+  const types = await fetchTypes();
+  const cities = await fetchCities();
 
   /**
    * jobsDeepCopy is passed as a prop to the Sidebar component.
@@ -44,10 +35,10 @@ export default async function Home() {
       <Sidebar
         id="sidebar"
         jobs={jobsDeepCopy}
-        departments={departmentesUnique}
-        statuses={statusesUnique}
-        types={typesUnique}
-        cities={citiesUnique}
+        departments={departments}
+        statuses={statuses}
+        types={types}
+        cities={cities}
       />
 
       <main className="overflow-y-auto">

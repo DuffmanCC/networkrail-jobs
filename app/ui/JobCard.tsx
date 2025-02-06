@@ -1,7 +1,6 @@
 import { JobMappedInterface } from "@/app/lib/types";
 import { HeartIcon } from "@/app/ui/Icons";
 import {
-  Button,
   Card,
   CardBody,
   CardFooter,
@@ -77,7 +76,7 @@ export default function JobCard({ job }: Props) {
 
   return (
     <Card
-      className="job-card hover:scale-101 bg-slate-200 dark:bg-slate-800"
+      className="job-card hover:border-slate-400 dark:hover:border-slate-700 border-2 border-transparent bg-slate-200 dark:bg-slate-800 transition-colors"
       shadow="none"
       radius="sm"
     >
@@ -126,11 +125,14 @@ export default function JobCard({ job }: Props) {
           )}
         </div>
 
-        <Button size="sm">
-          <Link href={job.applyLink} target="_blank" rel="noreferrer">
-            Apply Now
-          </Link>
-        </Button>
+        <Link
+          href={job.applyLink}
+          target="_blank"
+          rel="noreferrer"
+          className="bg-slate-300 hover:bg-slate-400 hover:text-white dark:bg-slate-700 dark:hover:bg-slate-600 px-4 py-1.5 rounded-lg text-xs transition-colors"
+        >
+          Apply Now
+        </Link>
       </CardFooter>
     </Card>
   );

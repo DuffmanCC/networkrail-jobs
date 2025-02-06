@@ -69,6 +69,7 @@ export async function fetchDepartments(apiVersion = "v2") {
       `❌ Error fetching jobs functions from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/departments:`,
       error
     );
+    return [];
   }
 }
 
@@ -90,6 +91,7 @@ export async function fetchStatuses(apiVersion = "v2") {
       `❌ Error fetching jobs statuses from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/statuses:`,
       error
     );
+    return [];
   }
 }
 
@@ -111,6 +113,7 @@ export async function fetchTypes(apiVersion = "v2") {
       `❌ Error fetching jobs contexts from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/types:`,
       error
     );
+    return [];
   }
 }
 
@@ -132,5 +135,6 @@ export async function fetchCities(apiVersion = "v2") {
       `❌ Error fetching jobs cities from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/cities:`,
       error
     );
+    return [];
   }
 }

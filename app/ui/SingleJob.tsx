@@ -41,7 +41,7 @@ export default function SingleJob({ job }: Props) {
         {job.applyLink && (
           <Link
             href={job.applyLink}
-            className="bg-brand-red text-white px-4 py-2 rounded-lg"
+            className="bg-brand-red hover:scale-105 text-white px-4 py-2 rounded-lg transition-transform"
             target="_blank"
             rel="noreferrer"
           >
