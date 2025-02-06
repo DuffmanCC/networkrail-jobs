@@ -82,7 +82,7 @@ export default function JobCard({ job }: Props) {
     >
       <CardHeader className="relative pr-8">
         <Link href={`/job/${job.jobId}`} className="">
-          <h2 className="line-clamp-1 text-brand-green font-bold underline decoration-current">
+          <h2 className="line-clamp-1 text-teal-800 dark:text-teal-300 font-bold hover:underline">
             {job.title.split("-")[0]}
           </h2>
         </Link>
@@ -92,7 +92,7 @@ export default function JobCard({ job }: Props) {
           aria-label={`${isHearted ? "Unlike" : "Like"} job`}
         >
           <HeartIcon
-            className="w-6 h-6 text-brand-red absolute right-2 top-3 hover:scale-105"
+            className="w-6 h-6 text-orange-800 dark:text-orange-300 absolute right-2 top-3 hover:scale-105"
             fill={isHearted ? "currentColor" : "none"}
           />
         </button>
@@ -113,7 +113,9 @@ export default function JobCard({ job }: Props) {
 
       <CardFooter className="flex justify-between items-end">
         <div className="font-black flex flex-col gap-1 text-sm">
-          <div className="text-brand-red">Salary range</div>
+          <div className="text-orange-800 dark:text-orange-300">
+            Salary range
+          </div>
 
           {!job.salary.min && !job.salary.max ? (
             <div className="text-xs">Not specified</div>

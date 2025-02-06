@@ -34,8 +34,11 @@ export default function Filters({
           <Select
             key={label}
             size="sm"
-            label={label}
-            placeholder={`Select ${label}`}
+            label={
+              <span className="text-slate-700 dark:text-slate-300">
+                {label}
+              </span>
+            }
             aria-label={`Select ${label}`}
             selectedKeys={filters[filterKey] ? [filters[filterKey]] : []}
             onChange={(e) => {
@@ -43,11 +46,7 @@ export default function Filters({
             }}
           >
             {options.map((el) => (
-              <SelectItem
-                key={el.value}
-                value={el.value}
-                className="text-foreground bg-background"
-              >
+              <SelectItem key={el.value} value={el.value}>
                 {el.label}
               </SelectItem>
             ))}
@@ -59,7 +58,11 @@ export default function Filters({
         </Checkbox>
 
         <Slider
-          label="Salary Range"
+          label={
+            <span className="text-slate-700 dark:text-slate-300">
+              Salary Range
+            </span>
+          }
           isDisabled={!isSalaryActive}
           step={5000}
           minValue={20000}

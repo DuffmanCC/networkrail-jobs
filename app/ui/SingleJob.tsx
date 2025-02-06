@@ -26,14 +26,14 @@ export default function SingleJob({ job }: Props) {
   };
 
   return (
-    <article className="bg-brand-yellow rounded-xl shadow-xl gap-2 sm:gap-4 flex flex-col max-w-4xl py-4 sm:py-6">
-      <h1 className="text-brand-green font-bold text-xl sm:text-2xl px-4 sm:px-6 flex items-center">
+    <article className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl shadow-xl gap-2 sm:gap-4 flex flex-col max-w-4xl py-4 sm:py-6">
+      <h1 className="font-bold text-xl sm:text-2xl px-4 sm:px-6 flex items-center text-teal-800 dark:text-teal-300">
         {job.title}
       </h1>
 
       <SingleJobMeta meta={jobMeta} />
 
-      <div className="text-base font-light leading-relaxed text-gray-600 px-4 sm:px-6 flex flex-col gap-4">
+      <div className="text-base font-light leading-relaxed px-4 sm:px-6 flex flex-col gap-4">
         {job.description}
       </div>
 
@@ -41,7 +41,7 @@ export default function SingleJob({ job }: Props) {
         {job.applyLink && (
           <Link
             href={job.applyLink}
-            className="bg-brand-red hover:scale-105 text-white px-4 py-2 rounded-lg transition-transform"
+            className="bg-orange-800 dark:bg-orange-300 text-slate-200 dark:text-slate-700 hover:scale-105 px-4 py-2 rounded-lg transition-transform"
             target="_blank"
             rel="noreferrer"
           >
