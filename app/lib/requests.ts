@@ -13,7 +13,7 @@ export async function fetchDataFromNetworRail() {
   return data.career;
 }
 
-export async function fetchJobs(
+export async function getJobs(
   searchParams: { [key: string]: string },
   apiVersion = "v2"
 ) {
@@ -34,7 +34,7 @@ export async function fetchJobs(
   }
 }
 
-export async function fetchJob(id: string, apiVersion = "v2") {
+export async function getJob(id: string, apiVersion = "v2") {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/job/${id}`,
@@ -73,7 +73,7 @@ export async function fetchDepartments(apiVersion = "v2") {
   }
 }
 
-export async function fetchStatuses(apiVersion = "v2") {
+export async function getStatuses(apiVersion = "v2") {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/statuses`,
@@ -95,7 +95,7 @@ export async function fetchStatuses(apiVersion = "v2") {
   }
 }
 
-export async function fetchTypes(apiVersion = "v2") {
+export async function getTypes(apiVersion = "v2") {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/types`,
@@ -117,7 +117,7 @@ export async function fetchTypes(apiVersion = "v2") {
   }
 }
 
-export async function fetchCities(apiVersion = "v2") {
+export async function getCities(apiVersion = "v2") {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/cities`,

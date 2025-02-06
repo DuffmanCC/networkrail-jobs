@@ -2,39 +2,25 @@ import JobsList from "@/app/ui/JobsList";
 import Sidebar from "@/app/ui/Sidebar";
 import { FilterProvider } from "./context/filter-context";
 import {
-  fetchCities,
   fetchDepartments,
-  fetchJobs,
-  fetchStatuses,
-  fetchTypes,
+  getCities,
+  getJobs,
+  getStatuses,
+  getTypes,
 } from "./lib/requests";
 
 export default async function Home() {
-  const jobs = await fetchJobs({});
+  const jobs = await getJobs({});
   const departments = await fetchDepartments();
-  const statuses = await fetchStatuses();
-  const types = await fetchTypes();
-  const cities = await fetchCities();
-
-  /**
-   * jobsDeepCopy is passed as a prop to the Sidebar component.
-   * If Sidebar or any other component modifies the jobs array
-   * (for example, by filtering or sorting it), those modifications
-   * would also affect the original jobs array if a deep copy wasn't made.
-   * This could lead to unexpected behavior in other parts of your
-   * app that also use the jobs array.
-   *
-   * By passing a deep copy to Sidebar, you ensure that any
-   * modifications made to the jobs array inside Sidebar won't
-   * affect the jobs array in the Home component.
-   */
-  const jobsDeepCopy = JSON.parse(JSON.stringify(jobs));
+  const statuses = await getStatuses();
+  const types = await getTypes();
+  const cities = await getCities();
 
   return (
     <FilterProvider>
       <Sidebar
         id="sidebar"
-        jobs={jobsDeepCopy}
+        jobs={jobs}
         departments={departments}
         statuses={statuses}
         types={types}
@@ -43,7 +29,7 @@ export default async function Home() {
 
       <main className="overflow-y-auto">
         <h1 className="sr-only">Home</h1>
-        <JobsList jobs={jobsDeepCopy} />
+        <JobsList jobs={jobs} />
       </main>
     </FilterProvider>
   );

@@ -1,4 +1,4 @@
-import { fetchJob } from "@/app/lib/requests";
+import { getJob } from "@/app/lib/requests";
 import SingleJob from "@/app/ui/SingleJob";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default async function Job({ params }: Props) {
-  const job = await fetchJob(params.id);
+  const job = await getJob(params.id);
 
   return (
     <div
