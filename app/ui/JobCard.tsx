@@ -87,7 +87,10 @@ export default function JobCard({ job }: Props) {
           </h2>
         </Link>
 
-        <button onClick={handleClickHeart}>
+        <button
+          onClick={handleClickHeart}
+          aria-label={`${isHearted ? "Unlike" : "Like"} job`}
+        >
           <HeartIcon
             className="w-6 h-6 text-brand-red absolute right-2 top-3 hover:scale-105"
             fill={isHearted ? "currentColor" : "none"}
