@@ -5,10 +5,14 @@ export async function GET() {
   console.log("Cron job triggered at:", new Date().toISOString());
 
   try {
-    await init();
-    const message = "Cron job completed successfully";
-    console.log(message);
-    return NextResponse.json({ message });
+    const jobs = await init();
+    return NextResponse.json(
+      {
+        message: "Cron job completed successfully",
+        newJobsAdded: jobs,
+      },
+      { status: 200 } // 200 is the default status code
+    );
   } catch (error) {
     const msg = error instanceof Error ? error.message : "Unknown error";
     console.error("Error in cron job:", msg);
