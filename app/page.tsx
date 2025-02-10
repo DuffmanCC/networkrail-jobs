@@ -9,6 +9,8 @@ import {
   getTypes,
 } from "./lib/requests";
 
+export const revalidate = 60 * 60 * 3;
+
 export default async function Home() {
   const jobs = await getJobs({});
   const departments = await fetchDepartments();
