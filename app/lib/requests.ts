@@ -14,12 +14,13 @@ export async function fetchDataFromNetworRail() {
 }
 
 export async function getJobs(
-  searchParams: { [key: string]: string },
+  searchParams: { [key: string]: string } = {},
   apiVersion = "v2"
 ) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs`,
+      { next: { revalidate: 60 * 60 * 3 } }
     );
 
     const data = await res.json();
