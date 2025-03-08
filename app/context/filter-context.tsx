@@ -16,7 +16,7 @@ export const FilterContext = createContext({
   setFilters: (filters: FiltersType) => {},
   showFilters: false,
   setShowFilters: (showFilters: boolean) => {},
-  isSalaryActive: true,
+  isSalaryActive: false,
   setIsSalaryActive: (isSalaryActive: boolean) => {},
 });
 
@@ -27,7 +27,7 @@ interface Props {
 export const FilterProvider = ({ children }: Props) => {
   const [filters, setFilters] = useState(initialFilters);
   const [showFilters, setShowFilters] = useState(false);
-  const [isSalaryActive, setIsSalaryActive] = useState(true);
+  const [isSalaryActive, setIsSalaryActive] = useState(false);
 
   return (
     <FilterContext.Provider

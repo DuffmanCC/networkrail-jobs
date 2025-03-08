@@ -20,7 +20,7 @@ export async function getJobs(
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs`,
-      { next: { revalidate: 60 * 60 * 3 } }
+      { cache: "no-store" }
     );
 
     const data = await res.json();
