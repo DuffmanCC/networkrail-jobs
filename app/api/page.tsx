@@ -25,6 +25,8 @@ export default async function Api() {
       slug: "get-job-by-id",
     },
   ];
+
+  const URL = process.env.NEXT_PUBLIC_API_URL;
   return (
     <>
       <aside className="px-6 py-2 md:p-6 rounded-md bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-white hidden sm:block">
@@ -50,35 +52,48 @@ export default async function Api() {
                 <strong>Verb:</strong> GET
               </li>
               <li>
-                <strong>Endpoint:</strong> /api/v2/jobs
+                <strong>Endpoint:</strong>{" "}
+                <a
+                  href={`${URL}/api/v2/jobs`}
+                  target="blank"
+                  className="text-blue-700 dark:text-blue-300 underline"
+                >
+                  /api/v2/jobs
+                </a>
               </li>
               <li>
                 <strong>Request:</strong>
-                <ul className="list-disc ml-6 mt-2">
+                <ul className="ml-6 mt-2">
+                  <strong>Query Parameters:</strong>
+
                   <li>
-                    <strong>Query Parameters:</strong>
+                    <ul className="list-disc ml-6">
+                      <li>
+                        <code className="font-bold">city</code>: String, filter
+                        jobs by city.
+                      </li>
+                      <li>
+                        <code className="font-bold">department</code>: String,
+                        filter jobs by department.
+                      </li>
+                      <li>
+                        <code className="font-bold">status</code>: String,
+                        filter jobs by status.
+                      </li>
+                      <li>
+                        <code className="font-bold">type</code>: String, filter
+                        jobs by type.
+                      </li>
+                      <li>
+                        <code className="font-bold">from</code>: String, filter
+                        jobs by start date.
+                      </li>
+                      <li>
+                        <code className="font-bold">to</code>: String, filter
+                        jobs by end date.
+                      </li>
+                    </ul>
                   </li>
-                  <ul className="ml-6">
-                    <li>
-                      <code>city</code>: String, filter jobs by city.
-                    </li>
-                    <li>
-                      <code>department</code>: String, filter jobs by
-                      department.
-                    </li>
-                    <li>
-                      <code>status</code>: String, filter jobs by status.
-                    </li>
-                    <li>
-                      <code>type</code>: String, filter jobs by type.
-                    </li>
-                    <li>
-                      <code>from</code>: String, filter jobs by start date.
-                    </li>
-                    <li>
-                      <code>to</code>: String, filter jobs by end date.
-                    </li>
-                  </ul>
                 </ul>
               </li>
               <li>
@@ -129,7 +144,14 @@ export default async function Api() {
                 <strong>Verb:</strong> GET
               </li>
               <li>
-                <strong>Endpoint:</strong> /api/v2/jobs/cities
+                <strong>Endpoint:</strong>{" "}
+                <a
+                  href={`${URL}/api/v2/jobs/cities`}
+                  target="blank"
+                  className="text-blue-700 dark:text-blue-300 underline"
+                >
+                  /api/v2/jobs/cities
+                </a>
               </li>
               <li>
                 <strong>Request:</strong> none
@@ -150,7 +172,14 @@ export default async function Api() {
                 <strong>Verb:</strong> GET
               </li>
               <li>
-                <strong>Endpoint:</strong> /api/v2/jobs/statuses
+                <strong>Endpoint:</strong>{" "}
+                <a
+                  href={`${URL}/api/v2/jobs/statuses`}
+                  target="blank"
+                  className="text-blue-700 underline"
+                >
+                  /api/v2/jobs/statuses
+                </a>
               </li>
               <li>
                 <strong>Request:</strong> none
@@ -171,7 +200,14 @@ export default async function Api() {
                 <strong>Verb:</strong> GET
               </li>
               <li>
-                <strong>Endpoint:</strong> /api/v2/jobs/types
+                <strong>Endpoint:</strong>{" "}
+                <a
+                  href={`${URL}/api/v2/jobs/types`}
+                  target="blank"
+                  className="text-blue-700 dark:text-blue-300 underline"
+                >
+                  /api/v2/jobs/types
+                </a>
               </li>
               <li>
                 <strong>Request:</strong> none
@@ -192,7 +228,14 @@ export default async function Api() {
                 <strong>Verb:</strong> GET
               </li>
               <li>
-                <strong>Endpoint:</strong> /api/v2/jobs/departments
+                <strong>Endpoint:</strong>{" "}
+                <a
+                  href={`${URL}/api/v2/jobs/departments`}
+                  target="blank"
+                  className="text-blue-700 dark:text-blue-300 underline"
+                >
+                  /api/v2/jobs/departments
+                </a>
               </li>
               <li>
                 <strong>Request:</strong> none
@@ -219,8 +262,8 @@ export default async function Api() {
                 <strong>Path Parameters:</strong>
                 <ul className="list-disc ml-6">
                   <li>
-                    <code>id</code>: MongoDB ObjectId, the unique identifier of
-                    the job.
+                    <code className="font-bold">id</code>: MongoDB ObjectId, the
+                    unique identifier of the job.
                   </li>
                 </ul>
               </li>
