@@ -1,35 +1,42 @@
 import { CACHE_TIME_REQUEST } from "./constants";
 
 export async function fetchDataFromNetworRail() {
-  const response = await fetch(
-    "https://www.networkrail.co.uk/wp-content/themes/sage-10/resources/careers.json"
-  );
+  try {
+    const res = await fetch(
+      "https://www.networkrail.co.uk/wp-content/themes/sage-10/resources/careers.json"
+    );
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data.jobs;
+  } catch (error) {
+    console.error(
+      `Error fetching jobs from Network Rail:`,
+      error instanceof Error ? error.message : error
+    );
   }
-
-  const data = await response.json();
-  return data.career;
 }
 
-export async function getJobs(
-  searchParams: { [key: string]: string } = {},
-  apiVersion = "v2"
-) {
+export async function getJobs(apiVersion = "v2") {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs`,
       { cache: "no-store" }
     );
 
-    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
 
+    const data = await res.json();
     return data.jobs;
   } catch (error) {
     console.error(
-      `❌ Error fetching jobs from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs:`,
-      error
+      `Error fetching jobs from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs:`,
+      error instanceof Error ? error.message : error
     );
     return [];
   }
@@ -42,15 +49,18 @@ export async function getJob(id: string, apiVersion = "v2") {
       { next: { revalidate: CACHE_TIME_REQUEST } }
     );
 
-    if (!res.ok) return;
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
 
     const data = await res.json();
     return data;
   } catch (error) {
     console.error(
-      `❌ Error fetching job from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/${id}:`,
-      error
+      `Error fetching job from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/${id}:`,
+      error instanceof Error ? error.message : error
     );
+    return null;
   }
 }
 
@@ -61,14 +71,16 @@ export async function fetchDepartments(apiVersion = "v2") {
       { next: { revalidate: CACHE_TIME_REQUEST } }
     );
 
-    if (!res.ok) return;
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
 
     const data = await res.json();
     return data;
   } catch (error) {
     console.error(
-      `❌ Error fetching jobs functions from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/departments:`,
-      error
+      `Error fetching jobs functions from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/departments:`,
+      error instanceof Error ? error.message : error
     );
     return [];
   }
@@ -89,8 +101,8 @@ export async function getStatuses(apiVersion = "v2") {
     return data;
   } catch (error) {
     console.error(
-      `❌ Error fetching jobs statuses from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/statuses:`,
-      error
+      `Error fetching jobs statuses from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/statuses:`,
+      error instanceof Error ? error.message : error
     );
     return [];
   }
@@ -111,8 +123,8 @@ export async function getTypes(apiVersion = "v2") {
     return data;
   } catch (error) {
     console.error(
-      `❌ Error fetching jobs contexts from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/types:`,
-      error
+      `Error fetching jobs contexts from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/types:`,
+      error instanceof Error ? error.message : error
     );
     return [];
   }
@@ -133,8 +145,8 @@ export async function getCities(apiVersion = "v2") {
     return data;
   } catch (error) {
     console.error(
-      `❌ Error fetching jobs cities from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/cities:`,
-      error
+      `Error fetching jobs cities from ${process.env.NEXT_PUBLIC_API_URL}/api/${apiVersion}/jobs/cities:`,
+      error instanceof Error ? error.message : error
     );
     return [];
   }
