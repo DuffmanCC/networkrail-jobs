@@ -1,15 +1,10 @@
-import { Card } from "@nextui-org/react";
+import JobCardSkeleton from "./ui/JobCardSkeleton";
+import SidebarSkeleton from "./ui/SidebarSkeleton";
 
 export default function Loading() {
   return (
     <>
-      <Card
-        className="hidden sm:block bg-slate-200 dark:bg-slate-800"
-        radius="sm"
-        shadow="none"
-      >
-        <aside className=""></aside>
-      </Card>
+      <SidebarSkeleton />
 
       <main className="overflow-y-auto">
         <div
@@ -18,12 +13,7 @@ export default function Loading() {
           }
         >
           {Array.from({ length: 20 }).map((_, i) => (
-            <Card
-              key={i}
-              className="job-card hover:border-slate-400 dark:hover:border-slate-700 border-2 border-transparent bg-slate-200 dark:bg-slate-800 transition-colors h-60"
-              shadow="none"
-              radius="sm"
-            ></Card>
+            <JobCardSkeleton key={i} />
           ))}
         </div>
       </main>

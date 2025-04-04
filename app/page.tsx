@@ -10,11 +10,13 @@ import {
 } from "./lib/requests";
 
 export default async function Home() {
-  const jobs = await getJobs();
-  const departments = await fetchDepartments();
-  const statuses = await getStatuses();
-  const types = await getTypes();
-  const cities = await getCities();
+  const [jobs, departments, statuses, types, cities] = await Promise.all([
+    getJobs(),
+    fetchDepartments(),
+    getStatuses(),
+    getTypes(),
+    getCities(),
+  ]);
 
   return (
     <FilterProvider>
